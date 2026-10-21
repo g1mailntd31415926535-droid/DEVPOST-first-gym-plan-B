@@ -68,7 +68,7 @@ Thống kê mẫu (hardcode), streak, lịch chấm công (ma trận điểm tra
 Tên bài (EN), chips `default_sets`, `default_min_rep–max_rep`, `default_rest_seconds`, kg = 99 placeholder; hai nút trống/bận. **Không truyền bất kỳ trạng thái thiết bị nào đi tiếp.** PRD ref: `prd.md > Buổi tập và thay bài`.
 
 ### BusyChoiceSheet
-Hai lựa chọn: mở danh sách thay thế / chuyển sang bài khác trong giáo án (hoãn bài hiện tại, quay lại vẫn hỏi lại). PRD ref: như trên.
+Hai lựa chọn: mở danh sách thay thế / mở **danh sách bài còn lại trong plan** để chọn bài tập trước (bài đang bận hoãn xuống cuối, quay lại vẫn hỏi lại). Picker luôn có nút Back; plan chỉ còn bài hiện tại → empty state + Back. PRD ref: như trên.
 
 ### ReplacementListScreen + ExerciseOptionCard
 Top 3 + "xem thêm". Card: ảnh, tên, tag (`Recommend` / `Kiểu chuyển động khác`), nhóm cơ + region, thiết bị, lý do (sinh từ dữ liệu đã chấm), dòng "khác biệt so với bài gốc" (sinh từ so sánh metadata: family/pattern/type/equipment). PRD ref: `prd.md > Recommendation Engine`.
@@ -131,7 +131,7 @@ Rỗng → `[]` để UI hiện empty state. Không phụ thuộc React/Supabase
 ### State trong app (bộ nhớ)
 
 ```ts
-type Phase = 'home' | 'check' | 'busy' | 'alternatives' | 'training' | 'rest' | 'finished';
+type Phase = 'home' | 'check' | 'busy' | 'pick' | 'alternatives' | 'training' | 'rest' | 'finished';
 type Session = {
   phase: Phase;
   plan: Exercise[];        // 5 bài; bài đã đổi thì thay tại chỗ
@@ -167,6 +167,7 @@ gym-plan-b/
 │   │   ├── HomeScreen.tsx
 │   │   ├── CheckScreen.tsx        # sheet kiểm máy
 │   │   ├── BusyChoiceScreen.tsx   # hai lựa chọn
+│   │   ├── PickExerciseScreen.tsx # danh sách bài còn lại + Back/empty state
 │   │   ├── ReplacementListScreen.tsx
 │   │   ├── TrainingScreen.tsx
 │   │   ├── RestScreen.tsx

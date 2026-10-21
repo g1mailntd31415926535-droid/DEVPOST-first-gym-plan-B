@@ -4,12 +4,12 @@ import { Sheet } from '../components/Sheet';
 export function BusyChoiceScreen({
   exerciseName,
   onPickSuggested,
-  onDefer,
+  onPickOther,
   onBack,
 }: {
   exerciseName: string;
   onPickSuggested: () => void;
-  onDefer: () => void;
+  onPickOther: () => void;
   onBack: () => void;
 }) {
   return (
@@ -17,8 +17,8 @@ export function BusyChoiceScreen({
       <div className="mx-auto h-1.5 w-10 rounded-full bg-ink/10" />
       <h1 className="mt-5 text-[22px] font-extrabold leading-tight">Machine busy — what now?</h1>
       <p className="mt-1 text-[12px] leading-relaxed text-muted">
-        Swap {exerciseName} for a similar exercise now, or move to another exercise and come back to this
-        machine later.
+        Swap {exerciseName} for a similar exercise now, or pick another exercise from your plan and come
+        back to this machine later.
       </p>
 
       <div className="mt-5 space-y-2">
@@ -31,12 +31,12 @@ export function BusyChoiceScreen({
         </button>
         <button
           type="button"
-          onClick={onDefer}
+          onClick={onPickOther}
           className="w-full rounded-2xl bg-white px-4 py-4 text-left text-[13px] font-extrabold uppercase tracking-wide text-ink ring-1 ring-ink/15 transition active:scale-[0.99]"
         >
           Do another exercise first
           <span className="mt-1 block text-[10px] font-semibold normal-case tracking-normal text-muted">
-            Keeps {exerciseName} in your plan and asks again when you come back
+            Choose from the exercises left in your plan. This one asks again when you come back
           </span>
         </button>
       </div>

@@ -88,4 +88,5 @@ Activity mode: [live app and editor, explicit static fallback, focused alternati
 - Slice 1: chỉ bundle font Inter subset latin + vietnamese (đủ cho UI tiếng Việt, giảm số file font).
 - Build: **toàn bộ copy UI đổi sang tiếng Anh** theo yêu cầu learner (nộp Devpost); `prd.md` + `spec.md` đã cập nhật quyết định ngôn ngữ.
 - Slice 2: session reducer tách ra `lib/session.ts` (thuần, test được) với **queue slot** thay vì `currentIndex`, để hoãn bài = đưa slot về cuối queue; `restEndsAt` là deadline tuyệt đối; thêm `restTarget` để biết hết nghỉ thì sang set kế hay bài kế.
+- Slice 2 (feedback learner): "Do another exercise first" mở **danh sách bài còn lại trong plan** để user tự chọn (không tự nhảy sang bài kế), có nút Back ở mọi trạng thái, và empty state + Back khi bài hiện tại là bài duy nhất còn lại. `prd.md` + `spec.md` đã cập nhật.
 

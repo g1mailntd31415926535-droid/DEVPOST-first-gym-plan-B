@@ -4,6 +4,7 @@ export type SessionPhase =
   | 'home'
   | 'check'
   | 'busy'
+  | 'pick'
   | 'alternatives'
   | 'training'
   | 'rest'
@@ -31,14 +32,15 @@ export type SessionAction =
   | { type: 'START'; plan: Exercise[] }
   | { type: 'START_EXERCISE' }
   | { type: 'OPEN_BUSY' }
+  | { type: 'OPEN_PICK' }
   | { type: 'OPEN_ALTERNATIVES' }
   | { type: 'BACK_TO_CHECK' }
   | { type: 'BACK_TO_BUSY' }
   | { type: 'CHOOSE'; exercise: Exercise }
+  | { type: 'PICK_OTHER'; slot: number }
   | { type: 'TOGGLE_SHOW_ALL' }
   | { type: 'SET_DONE'; now: number }
   | { type: 'REST_DONE' }
-  | { type: 'DEFER' }
   | { type: 'RESTART' };
 
 export const initialSessionState: SessionState = {
@@ -63,9 +65,18 @@ export function currentExercise(state: SessionState): Exercise | undefined {
   return slot === undefined ? undefined : state.plan[slot];
 }
 
+export interface UpcomingOption {
+  slot: number;
+  exercise: Exercise;
+}
+
 /** Exercises still waiting after the current one, in queue order. */
+export function upcomingOptions(state: SessionState): UpcomingOption[] {
+  return state.queue.slice(1).map((slot) => ({ slot, exercise: state.plan[slot] }));
+}
+
 export function upcomingExercises(state: SessionState): Exercise[] {
-  return state.queue.slice(1).map((slot) => state.plan[slot]);
+  return upcomingOptions(state).map((option) => option.exercise);
 }
 
 export function sessionReducer(state: SessionState, action: SessionAction): SessionState {
@@ -84,6 +95,9 @@ export function sessionReducer(state: SessionState, action: SessionAction): Sess
     case 'OPEN_BUSY':
       return { ...state, phase: 'busy' };
 
+    case 'OPEN_PICK':
+      return { ...state, phase: 'pick', showAll: false };
+
     case 'OPEN_ALTERNATIVES':
       return { ...state, phase: 'alternatives', showAll: false };
 
@@ -101,6 +115,24 @@ export function sessionReducer(state: SessionState, action: SessionAction): Sess
         plan: state.plan.map((exercise, index) => (index === slot ? action.exercise : exercise)),
         replacedFrom: { ...state.replacedFrom, [slot]: state.plan[slot].name },
         phase: 'training',
+        currentSet: 1,
+        showAll: false,
+      };
+    }
+
+    case 'PICK_OTHER': {
+      const slot = currentSlot(state);
+      const rest = state.queue.slice(1);
+      const pickedIndex = rest.indexOf(action.slot);
+      if (slot === undefined || pickedIndex === -1) return state;
+
+      const remaining = rest.filter((_, index) => index !== pickedIndex);
+      return {
+        ...state,
+        // Picked exercise goes now; the busy one waits at the very end of the plan.
+        queue: [action.slot, ...remaining, slot],
+        deferred: state.deferred.includes(slot) ? state.deferred : [...state.deferred, slot],
+        phase: 'check',
         currentSet: 1,
         showAll: false,
       };
@@ -147,21 +179,6 @@ export function sessionReducer(state: SessionState, action: SessionAction): Sess
         currentSet: 1,
         restEndsAt: null,
         restTarget: null,
-      };
-    }
-
-    case 'DEFER': {
-      const slot = currentSlot(state);
-      if (slot === undefined) return state;
-      const rest = state.queue.slice(1);
-      return {
-        ...state,
-        // The busy exercise stays in the plan and comes back at the end of the queue.
-        queue: rest.length > 0 ? [...rest, slot] : state.queue,
-        deferred: state.deferred.includes(slot) ? state.deferred : [...state.deferred, slot],
-        phase: 'check',
-        currentSet: 1,
-        showAll: false,
       };
     }
 

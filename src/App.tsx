@@ -7,10 +7,12 @@ import {
   initialSessionState,
   sessionReducer,
   upcomingExercises,
+  upcomingOptions,
 } from './lib/session';
 import { HomeScreen } from './screens/HomeScreen';
 import { CheckScreen } from './screens/CheckScreen';
 import { BusyChoiceScreen } from './screens/BusyChoiceScreen';
+import { PickExerciseScreen } from './screens/PickExerciseScreen';
 import { ReplacementListScreen } from './screens/ReplacementListScreen';
 import { TrainingScreen } from './screens/TrainingScreen';
 import { RestScreen } from './screens/RestScreen';
@@ -27,6 +29,7 @@ export default function App() {
   );
 
   const upcoming = upcomingExercises(state);
+  const options = upcomingOptions(state);
   const position = state.plan.length - state.queue.length + 1;
 
   if (state.phase === 'home') {
@@ -63,8 +66,19 @@ export default function App() {
       <BusyChoiceScreen
         exerciseName={current.name}
         onPickSuggested={() => dispatch({ type: 'OPEN_ALTERNATIVES' })}
-        onDefer={() => dispatch({ type: 'DEFER' })}
+        onPickOther={() => dispatch({ type: 'OPEN_PICK' })}
         onBack={() => dispatch({ type: 'BACK_TO_CHECK' })}
+      />
+    );
+  }
+
+  if (state.phase === 'pick') {
+    return (
+      <PickExerciseScreen
+        currentName={current.name}
+        options={options}
+        onPick={(slot) => dispatch({ type: 'PICK_OTHER', slot })}
+        onBack={() => dispatch({ type: 'BACK_TO_BUSY' })}
       />
     );
   }

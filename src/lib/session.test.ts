@@ -4,6 +4,7 @@ import {
   currentExercise,
   initialSessionState,
   sessionReducer,
+  upcomingOptions,
   type SessionAction,
   type SessionState,
 } from './session';
@@ -21,11 +22,9 @@ const TEST_PLAN = [
 });
 
 const NOW = 1_750_000_000_000;
+const startState = (): SessionState =>
+  sessionReducer(initialSessionState, { type: 'START', plan: TEST_PLAN });
 const reduce = (...actions: SessionAction[]) => actions.reduce(sessionReducer, startState());
-
-function startState(): SessionState {
-  return sessionReducer(initialSessionState, { type: 'START', plan: TEST_PLAN });
-}
 
 describe('session — set and rest flow', () => {
   it('starts a session at the first exercise with the full queue', () => {
@@ -77,19 +76,46 @@ describe('session — set and rest flow', () => {
   });
 });
 
-describe('session — deferring a busy exercise', () => {
-  it('sends the busy exercise to the end of the queue and keeps it in the plan', () => {
-    const state = reduce({ type: 'DEFER' });
+describe('session — picking another exercise', () => {
+  it('opens the picker showing only the remaining exercises', () => {
+    const state = reduce({ type: 'OPEN_PICK' });
+    expect(state.phase).toBe('pick');
+    expect(upcomingOptions(state).map((option) => option.slot)).toEqual([1, 2, 3, 4]);
+    expect(upcomingOptions(state).map((option) => option.exercise.name)).toEqual([
+      'Flat Bench Press',
+      'Lateral Raise',
+      'Lat Pulldown',
+      'Squat',
+    ]);
+  });
+
+  it('puts the picked exercise first and the busy one at the end of the plan', () => {
+    const state = reduce({ type: 'OPEN_PICK' }, { type: 'PICK_OTHER', slot: 2 });
     expect(state.phase).toBe('check');
-    expect(state.queue).toEqual([1, 2, 3, 4, 0]);
+    expect(state.queue).toEqual([2, 1, 3, 4, 0]);
+    expect(currentExercise(state)?.name).toBe('Lateral Raise');
     expect(state.deferred).toEqual([0]);
     expect(state.plan).toHaveLength(5);
-    expect(currentExercise(state)?.name).toBe('Flat Bench Press');
     expect(state.plan[0].name).toBe('Incline Barbell Press');
+    expect(state.currentSet).toBe(1);
+  });
+
+  it('ignores a slot that is not in the remaining list', () => {
+    const state = reduce({ type: 'OPEN_PICK' });
+    expect(sessionReducer(state, { type: 'PICK_OTHER', slot: 0 })).toBe(state);
+    expect(sessionReducer(state, { type: 'PICK_OTHER', slot: 99 })).toBe(state);
+  });
+
+  it('shows no options when the current exercise is the only one left', () => {
+    const single = sessionReducer(initialSessionState, {
+      type: 'START',
+      plan: [TEST_PLAN[0]],
+    });
+    expect(upcomingOptions(single)).toEqual([]);
   });
 
   it('asks again when the deferred exercise comes back around', () => {
-    let state = reduce({ type: 'DEFER' });
+    let state = reduce({ type: 'OPEN_PICK' }, { type: 'PICK_OTHER', slot: 1 });
     for (let index = 0; index < 4; index += 1) {
       const exercise = currentExercise(state)!;
       for (let set = 0; set < exercise.defaultSets; set += 1) {
@@ -100,17 +126,6 @@ describe('session — deferring a busy exercise', () => {
     expect(state.phase).toBe('check');
     expect(currentExercise(state)?.name).toBe('Incline Barbell Press');
     expect(state.deferred).toEqual([0]);
-  });
-
-  it('keeps the exercise current if it is the only one left', () => {
-    const single = sessionReducer(initialSessionState, {
-      type: 'START',
-      plan: [TEST_PLAN[0]],
-    });
-    const deferred = sessionReducer(single, { type: 'DEFER' });
-    expect(deferred.queue).toEqual([0]);
-    expect(currentExercise(deferred)?.name).toBe('Incline Barbell Press');
-    expect(deferred.deferred).toEqual([0]);
   });
 });
 

@@ -75,7 +75,7 @@ Ma trận điểm movement (80%): cùng family + cùng pattern = 1.0 → tag Rec
 ### Buổi tập và thay bài
 
 - **Nguyên tắc UX (quan trọng):** CheckSheet và BusyChoiceSheet **không phải quy trình khai báo tình trạng thiết bị**. User chỉ xác định "bài này tôi không tập được ngay" rồi yêu cầu bài thay thế. App **không hỏi** user đang có những thiết bị nào; engine **không bao giờ** lọc kết quả theo tình trạng thiết bị; danh sách đề xuất giống hệt nhau bất kể "máy nào bận". User tự quan sát phòng gym và chọn phương án.
-- Sheet từng bài: máy trống → tập luôn; máy bận → **sheet hai lựa chọn**: (1) mở danh sách thay thế đề xuất; (2) **"chọn bài khác trong giáo án để tập trước"** — tạm hoãn bài bị bận và sang bài khác (*assumption chờ learner xác nhận: bài bị bận vẫn còn trong danh sách để quay lại sau, khi quay lại hỏi lại máy trống không*).
+- Sheet từng bài: máy trống → tập luôn; máy bận → **sheet hai lựa chọn**: (1) mở danh sách thay thế đề xuất; (2) **"chọn bài khác trong giáo án để tập trước"** → mở **danh sách các bài còn lại trong plan** để user chọn bài muốn tập; bài bị bận được đẩy xuống cuối plan và **vẫn còn trong danh sách**, khi quay lại hỏi lại máy trống không. Danh sách chọn bài luôn có nút **Back**; nếu không còn bài nào khác ngoài bài đang tập → thông báo rõ và nút Back (learner đã xác nhận behavior này tại build).
 - Chọn bài thay thể → đổi vị trí bài cũ trong Test Set → sang **màn tập** của bài mới.
 - Màn tập: set hiện tại, chip 4 set (S1–S4), "Tiếp theo"; "Hoàn thành set" → màn nghỉ → đếm ngược → "Bỏ qua – tập tiếp" → set kế hoặc bài kế.
 - Giá trị mặc định của bài gợi ý: **sets/reps lấy theo mặc định từ bản ghi bài tập**; **kg = 99 (placeholder cho mọi bài)** — quy đổi tạ sẽ thêm sau cuộc thi.
@@ -143,4 +143,4 @@ Trọn vẹn luồng: màn chính (mẫu) → Test Set ▶ → sheet kiểm máy
 
 - **Trước 4-spec:** phương án dùng ảnh RepDB đúng điều khoản "không tái phân phối như dataset/API" — gộp những file ảnh được dùng vào trong app (in-app use, có attribution) là hợp lệ; chốt cách đóng gói/cấp phát ảnh ở bước spec.
 - **Trước 4-spec:** xác nhận MuscleMap hỗ trợ tách region (ngực trên/giữa/dưới, vai trước/giữa/sau) hay cần fallback trung thực.
-- **Có thể chờ đến build:** hành vi chi tiết của lựa chọn (2) "chọn bài khác trong giáo án để tập trước" — bài bị bận trình bày thế nào trong danh sách trong khi bị hoãn (đã ghi assumption trong `Features and Behavior > Buổi tập và thay bài`, cần learner xác nhận khi build).
+- **Đã chốt tại build:** hành vi của lựa chọn (2) "chọn bài khác trong giáo án để tập trước" — hiện danh sách các bài còn lại để chọn, luôn có nút Back, và có thông báo riêng khi không còn bài nào khác.
