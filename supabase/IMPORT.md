@@ -5,25 +5,22 @@ the original Gym Tracker UUIDs. The old project is only ever read from.
 
 ## 1. Export from the old project (read-only)
 
-Do not edit or delete anything in the old project. In its SQL editor, run a **select** like this,
-adjusting the name list to the 5 Test Set exercises plus the candidates you want:
+Do not edit or delete anything in the old project. In its SQL editor, run a **select** (learner
+chose a full-table export, so we can pick the right rows offline):
 
 ```sql
 select id, name, default_sets, default_min_rep, default_max_rep, default_rest_seconds, equipment
 from public.exercises
-where name in (
-  'Incline Barbell Press',
-  'Flat Bench Press',
-  'Lateral Raise',
-  'Lat Pulldown',
-  'Squat'
-  -- add candidate exercises here
-)
 order by name;
 ```
 
-Export the result as CSV/JSON. Only these rows ever reach the new project — no auth tables,
-profiles, history, or credentials.
+Download the result as CSV and save it to `supabase/import/old-exercises.csv`. That folder is
+gitignored: raw exports never enter the repo. From this file we select the 5 Test Set exercises
+plus ~3–5 candidates per target region; only those rows are inserted into the new project. No auth
+tables, profiles, history, or credentials are exported.
+
+Needed columns are exactly the seven above. Do **not** include `image_url`, `exercise_image_url`,
+`muscle_diagram_url`, or `video_url` (Lyfta assets are not licensed for this project).
 
 ## 2. Create the new project
 

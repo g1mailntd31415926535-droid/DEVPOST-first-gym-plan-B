@@ -10,6 +10,9 @@ dist/
 # Personal learning context (kept out of commits)
 devpost/learner-profile.md
 
+# Raw exports from the old Supabase project (never commit exercise dumps)
+supabase/import/
+
 # Curriculum / skill pack material (not part of the project)
 .agents/
 .claude/
