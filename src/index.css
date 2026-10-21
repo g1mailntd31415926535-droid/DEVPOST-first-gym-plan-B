@@ -1,0 +1,31 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    @apply bg-[#E9ECF2] font-sans text-ink antialiased;
+  }
+}
+
+@layer components {
+  .phone-frame {
+    @apply mx-auto min-h-screen w-full max-w-[430px] bg-white shadow-[0_0_60px_rgba(11,13,18,0.08)];
+  }
+
+  .chip {
+    @apply inline-flex items-center rounded-chip bg-chip px-3 py-1 text-[13px] font-semibold text-ink/80;
+  }
+
+  .chip-active {
+    @apply bg-brand text-white;
+  }
+
+  .sheet {
+    @apply rounded-t-[32px] bg-white px-5 pb-8 pt-3;
+  }
+}

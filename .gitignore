@@ -1,0 +1,17 @@
+﻿# Dependencies and build output
+node_modules/
+dist/
+
+# Local credentials
+.env
+.env.*
+!.env.example
+
+# Personal learning context (kept out of commits)
+devpost/learner-profile.md
+
+# Curriculum / skill pack material (not part of the project)
+.agents/
+.claude/
+agent/
+skills-lock.json
