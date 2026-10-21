@@ -19,7 +19,7 @@ Build mode: learn
   Learner check: Mở `http://localhost:5173`, bấm vào Test Set, bấm "Đang bận" → "Chọn bài đề xuất", xem danh sách có đúng kiểu "một bài cùng vùng cơ đứng đầu kèm lý do" như bạn hình dung không, và nói cảm giác giao diện so với mockup.
   Commit: `feat: ranked replacement list with recommendation engine`
 
-- [ ] **2. Buổi tập hoàn chỉnh: màn tập, đồng hồ nghỉ, và lựa chọn "tập bài khác trước"**
+- [x] **2. Buổi tập hoàn chỉnh: màn tập, đồng hồ nghỉ, và lựa chọn "tập bài khác trước"**
   Becomes usable: Từ bài đã thay, màn tập hiển thị đủ chips (khóa tạ 99, khoảng rep, nghỉ), set hiện tại + chip S1–S4, "Tiếp theo"; bấm "Hoàn thành set" → màn nghỉ đếm ngược đúng theo `default_rest_seconds`, có "Bỏ qua – tập tiếp", hết giờ tự sang set kế; chọn "Bài khác trong giáo án" thì bài bị bận được hoãn, quay lại vẫn hỏi lại máy trống không; đi hết Test Set tới màn kết thúc buổi.
   Why now: Hoàn thiện vòng lặp người dùng thật (tập → nghỉ → bài kế) trước khi nối dữ liệu thật, để lỗi hành vi lộ ra khi còn rẻ; đồng hồ là chỗ dễ sai khi tab bị ẩn.
   PRD ref: `prd.md > The Core Journey` (bước 6–8), `prd.md > Buổi tập và thay bài`, `prd.md > States and Boundaries`
@@ -61,7 +61,7 @@ Build mode: learn
 
 ## Hands-on Checkpoints
 
-- [ ] Early usable behavior explored — sau slice 1 (danh sách thay thế xếp hạng)
+- [x] Early usable behavior explored — sau slice 1 (danh sách thay thế xếp hạng)
 - [ ] Final kick-the-tires exploration and feedback completed
 
 ## Final Review
@@ -89,4 +89,5 @@ Activity mode: [live app and editor, explicit static fallback, focused alternati
 - Build: **toàn bộ copy UI đổi sang tiếng Anh** theo yêu cầu learner (nộp Devpost); `prd.md` + `spec.md` đã cập nhật quyết định ngôn ngữ.
 - Slice 2: session reducer tách ra `lib/session.ts` (thuần, test được) với **queue slot** thay vì `currentIndex`, để hoãn bài = đưa slot về cuối queue; `restEndsAt` là deadline tuyệt đối; thêm `restTarget` để biết hết nghỉ thì sang set kế hay bài kế.
 - Slice 2 (feedback learner): "Do another exercise first" mở **danh sách bài còn lại trong plan** để user tự chọn (không tự nhảy sang bài kế), có nút Back ở mọi trạng thái, và empty state + Back khi bài hiện tại là bài duy nhất còn lại. `prd.md` + `spec.md` đã cập nhật.
+- Slice 3 (code path): `loadExercises()` async + loading gate; Supabase lỗi/thiếu config/thiếu bài Test Set → seed + banner "Sample data". `lib/supabase.ts` chỉ dùng anon key; `supabase/schema.sql` bật RLS select-only, không có policy ghi; `supabase/IMPORT.md` hướng dẫn export read-only + insert giữ UUID. **Chưa import dữ liệu thật** — chờ learner export và duyệt metadata.
 

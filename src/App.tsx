@@ -1,6 +1,5 @@
-import { useMemo, useReducer } from 'react';
-import { SEED_EXERCISES } from './data/seed';
-import { buildTestPlan } from './data/exercises';
+import { useEffect, useMemo, useReducer, useState } from 'react';
+import { buildTestPlan, loadExercises, type Catalog } from './data/exercises';
 import { rankAlternatives } from './lib/recommendation';
 import {
   currentExercise,
@@ -10,6 +9,7 @@ import {
   upcomingOptions,
 } from './lib/session';
 import { HomeScreen } from './screens/HomeScreen';
+import { LoadingScreen } from './screens/LoadingScreen';
 import { CheckScreen } from './screens/CheckScreen';
 import { BusyChoiceScreen } from './screens/BusyChoiceScreen';
 import { PickExerciseScreen } from './screens/PickExerciseScreen';
@@ -19,21 +19,47 @@ import { RestScreen } from './screens/RestScreen';
 import { FinishedScreen } from './screens/FinishedScreen';
 
 export default function App() {
+  const [catalog, setCatalog] = useState<Catalog | null>(null);
   const [state, dispatch] = useReducer(sessionReducer, initialSessionState);
-  const testPlan = useMemo(() => buildTestPlan(SEED_EXERCISES), []);
+
+  useEffect(() => {
+    let active = true;
+    void loadExercises().then((result) => {
+      if (active) setCatalog(result);
+    });
+    return () => {
+      active = false;
+    };
+  }, []);
+
+  const testPlan = useMemo(
+    () => (catalog ? buildTestPlan(catalog.exercises) : []),
+    [catalog],
+  );
+  const exercises = catalog?.exercises ?? [];
   const current = currentExercise(state);
 
   const ranked = useMemo(
-    () => (current ? rankAlternatives(current, SEED_EXERCISES) : []),
-    [current],
+    () => (current ? rankAlternatives(current, exercises) : []),
+    [current, exercises],
   );
 
   const upcoming = upcomingExercises(state);
   const options = upcomingOptions(state);
   const position = state.plan.length - state.queue.length + 1;
 
+  if (!catalog) {
+    return <LoadingScreen />;
+  }
+
   if (state.phase === 'home') {
-    return <HomeScreen onStart={() => dispatch({ type: 'START', plan: testPlan })} />;
+    return (
+      <HomeScreen
+        dataSource={catalog.source}
+        dataNote={catalog.note}
+        onStart={() => dispatch({ type: 'START', plan: testPlan })}
+      />
+    );
   }
 
   if (state.phase === 'finished') {

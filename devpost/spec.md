@@ -92,7 +92,7 @@ Vòng đếm ngược; tính theo `Date.now()` để đúng khi tab bị treo; n
 Rỗng → `[]` để UI hiện empty state. Không phụ thuộc React/Supabase → unit-test được và port được.
 
 ### data/exercises.ts + data/seed.ts
-`fetchExercises()`: Supabase select (id, name, defaults, equipment, metadata, image_asset); timeout/error → seed. Seed = đúng 15–25 bài cần cho Test Set (đóng gói tĩnh, kèm metadata y hệt DB). PRD ref: `prd.md > Dữ liệu`.
+`loadExercises()`: Supabase select (id, name, defaults, equipment, metadata, image_asset) với timeout; thiếu config / lỗi / thiếu bài Test Set → seed + `source: 'seed'` để Home hiện banner "Sample data". Có loading gate ngắn trước khi vào Home. Seed = đúng bộ bài cần cho Test Set (đóng gói tĩnh, kèm metadata y hệt DB); `mapExerciseRow` đổi snake_case → camelCase. PRD ref: `prd.md > Dữ liệu`.
 
 ## Data Model
 

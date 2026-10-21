@@ -1,7 +1,15 @@
 const days = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
 const trainedDays = [2, 5, 6, 9, 12, 16, 19, 23];
 
-export function HomeScreen({ onStart }: { onStart: () => void }) {
+export function HomeScreen({
+  onStart,
+  dataSource,
+  dataNote,
+}: {
+  onStart: () => void;
+  dataSource: 'seed' | 'supabase';
+  dataNote?: string;
+}) {
   return (
     <div className="phone-frame px-5 pb-8 pt-6">
       <header className="flex items-center justify-between">
@@ -13,6 +21,18 @@ export function HomeScreen({ onStart }: { onStart: () => void }) {
           TD
         </div>
       </header>
+
+      {dataSource === 'seed' && (
+        <div
+          title={dataNote}
+          className="mt-4 flex items-start gap-2 rounded-2xl bg-amber-50 px-3 py-2.5 text-amber-800 ring-1 ring-amber-200"
+        >
+          <span className="mt-0.5 text-[13px]">●</span>
+          <p className="text-[11px] font-semibold leading-relaxed">
+            Sample data — Supabase is not connected. The demo is running on bundled exercises.
+          </p>
+        </div>
+      )}
 
       <section className="mt-5 grid grid-cols-3 gap-2">
         <div className="rounded-2xl bg-brand p-3 text-white">
