@@ -109,7 +109,8 @@ Bấm ▶ vào Test Set bắt đầu tập → sheet bài bị bận → bấm "
 - **Ảnh minh họa RepDB Free + MuscleMap SVG; attribution RepDB bắt buộc** — tôn trọng giấy phép; MuscleMap MIT.
 - **Màn chính giữ nguyên thiết kế với dữ liệu mẫu** — tạo bối cảnh demo, ít công vì chỉ hiển thị.
 - **Test Set gồm 5 bài gốc kiểm thử: Incline Barbell Press, Flat Bench Press, Lateral Raise, Lat Pulldown, Squat** — mỗi bài nhờ 3–5 ứng viên đến từ bản clone; thiếu thì báo thiếu, không bịa; top 3 + "xem thêm".
-- **Tên bài tập chỉ tiếng Anh** — nộp cho ban tổ chức ở Mỹ, bỏ tên tiếng Việt trong ngoặc.
+- **Tên bài tập chỉ tiếng Anh** - nộp cho ban tổ chức ở Mỹ, bỏ tên tiếng Việt trong ngoặc.
+- **Toàn bộ copy UI bằng tiếng Anh** (learner yêu cầu tại build để nộp Devpost) - thay cho quyết định "UI tiếng Việt" ban đầu; tên bài vẫn giữ tiếng Anh.
 
 ## What We're Building
 

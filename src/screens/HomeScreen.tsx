@@ -1,4 +1,4 @@
-const days = ['T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'CN'];
+const days = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
 const trainedDays = [2, 5, 6, 9, 12, 16, 19, 23];
 
 export function HomeScreen({ onStart }: { onStart: () => void }) {
@@ -7,7 +7,7 @@ export function HomeScreen({ onStart }: { onStart: () => void }) {
       <header className="flex items-center justify-between">
         <div>
           <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-brand">Gym Plan B</p>
-          <h1 className="mt-1 text-[22px] font-extrabold leading-tight">Hôm nay tập gì?</h1>
+          <h1 className="mt-1 text-[22px] font-extrabold leading-tight">Today&rsquo;s session</h1>
         </div>
         <div className="flex h-11 w-11 items-center justify-center rounded-full bg-brand-soft text-sm font-extrabold text-brand">
           TD
@@ -17,42 +17,42 @@ export function HomeScreen({ onStart }: { onStart: () => void }) {
       <section className="mt-5 grid grid-cols-3 gap-2">
         <div className="rounded-2xl bg-brand p-3 text-white">
           <p className="text-[26px] font-extrabold leading-none">3</p>
-          <p className="mt-1 text-[10px] font-semibold uppercase leading-tight opacity-80">Buổi tháng này</p>
+          <p className="mt-1 text-[10px] font-semibold uppercase leading-tight opacity-80">This month</p>
         </div>
         <div className="rounded-2xl bg-white p-3 ring-1 ring-ink/5">
           <p className="text-[26px] font-extrabold leading-none">3</p>
-          <p className="mt-1 text-[10px] font-semibold uppercase leading-tight text-muted">Tổng buổi</p>
+          <p className="mt-1 text-[10px] font-semibold uppercase leading-tight text-muted">Total sessions</p>
         </div>
         <div className="rounded-2xl bg-white p-3 ring-1 ring-ink/5">
           <p className="text-[26px] font-extrabold leading-none">2</p>
-          <p className="mt-1 text-[10px] font-semibold uppercase leading-tight text-muted">Lịch tập</p>
+          <p className="mt-1 text-[10px] font-semibold uppercase leading-tight text-muted">Routines</p>
         </div>
       </section>
 
       <section className="mt-4 rounded-card bg-white p-4 ring-1 ring-ink/5">
         <div className="flex items-center justify-between">
-          <h2 className="text-[13px] font-extrabold uppercase tracking-wide">Độ chăm chỉ</h2>
-          <span className="text-[12px] font-semibold text-muted">Tháng 10/2026</span>
+          <h2 className="text-[13px] font-extrabold uppercase tracking-wide">Consistency</h2>
+          <span className="text-[12px] font-semibold text-muted">Oct 2026</span>
         </div>
         <div className="mt-3 grid grid-cols-2 gap-2">
           <div className="rounded-2xl bg-chip p-3">
-            <p className="text-[20px] font-extrabold leading-none">0 ngày</p>
-            <p className="mt-1 text-[11px] font-semibold text-muted">Chuỗi hiện tại</p>
+            <p className="text-[20px] font-extrabold leading-none">0 days</p>
+            <p className="mt-1 text-[11px] font-semibold text-muted">Current streak</p>
           </div>
           <div className="rounded-2xl bg-chip p-3">
-            <p className="text-[20px] font-extrabold leading-none">3 buổi</p>
-            <p className="mt-1 text-[11px] font-semibold text-muted">Trong tháng</p>
+            <p className="text-[20px] font-extrabold leading-none">3 sessions</p>
+            <p className="mt-1 text-[11px] font-semibold text-muted">This month</p>
           </div>
         </div>
         <div className="mt-3 flex gap-2 text-[11px] font-bold">
-          <span className="rounded-chip bg-ink px-3 py-1 text-white">1T</span>
-          <span className="rounded-chip bg-chip px-3 py-1 text-muted">2T</span>
-          <span className="rounded-chip bg-chip px-3 py-1 text-muted">Năm</span>
-          <span className="rounded-chip bg-chip px-3 py-1 text-muted">Tất cả</span>
+          <span className="rounded-chip bg-ink px-3 py-1 text-white">1M</span>
+          <span className="rounded-chip bg-chip px-3 py-1 text-muted">2M</span>
+          <span className="rounded-chip bg-chip px-3 py-1 text-muted">Year</span>
+          <span className="rounded-chip bg-chip px-3 py-1 text-muted">All</span>
         </div>
         <div className="mt-3 grid grid-cols-7 gap-1 text-center text-[10px] font-semibold text-muted">
-          {days.map((day) => (
-            <span key={day}>{day}</span>
+          {days.map((day, index) => (
+            <span key={`${day}-${index}`}>{day}</span>
           ))}
         </div>
         <div className="mt-1 grid grid-cols-7 gap-1">
@@ -79,8 +79,8 @@ export function HomeScreen({ onStart }: { onStart: () => void }) {
 
       <section className="mt-5">
         <div className="flex items-center justify-between">
-          <h2 className="text-[15px] font-extrabold">Giáo án của bạn</h2>
-          <span className="text-[12px] font-semibold text-muted">1 lịch</span>
+          <h2 className="text-[15px] font-extrabold">Your plan</h2>
+          <span className="text-[12px] font-semibold text-muted">1 routine</span>
         </div>
 
         <div className="mt-3 rounded-card bg-white p-4 ring-1 ring-ink/5">
@@ -90,12 +90,12 @@ export function HomeScreen({ onStart }: { onStart: () => void }) {
                 Day 01
               </span>
               <h3 className="mt-2 text-[18px] font-extrabold">Test Set</h3>
-              <p className="mt-1 text-[12px] font-semibold text-muted">5 bài · sẵn sàng</p>
+              <p className="mt-1 text-[12px] font-semibold text-muted">5 exercises · ready</p>
             </div>
             <button
               type="button"
               onClick={onStart}
-              aria-label="Bắt đầu buổi tập Test Set"
+              aria-label="Start Test Set session"
               className="flex h-14 w-14 items-center justify-center rounded-2xl bg-brand text-white shadow-lg shadow-brand/30 transition active:scale-95"
             >
               <svg viewBox="0 0 24 24" fill="currentColor" className="ml-1 h-6 w-6" aria-hidden>
@@ -110,14 +110,15 @@ export function HomeScreen({ onStart }: { onStart: () => void }) {
       </section>
 
       <section className="mt-4 rounded-card bg-ink p-4 text-white">
-        <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-white/50">Cách hoạt động</p>
+        <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-white/50">How it works</p>
         <p className="mt-2 text-[13px] leading-relaxed text-white/80">
-          Máy đang bận? Bấm “Đang bận” để xem bài thay thế cùng vùng cơ, xếp theo độ giống chuyển động.
+          Machine taken? Tap &ldquo;Machine busy&rdquo; to see swaps for the same muscle region, ranked by
+          movement similarity.
         </p>
       </section>
 
       <p className="mt-6 text-center text-[11px] font-semibold text-muted">
-        Bản demo proof-of-concept · Dữ liệu bài tập: RepDB Free
+        Proof-of-concept demo · Exercise data: RepDB Free
       </p>
     </div>
   );

@@ -52,14 +52,14 @@ Docs: [Vite](https://vite.dev/guide/) · [React](https://react.dev/reference/rea
 Nguồn: `prd.md > Look and Feel` + `scope.md > Inspiration & Identity`.
 
 - Nền trắng, nhấn **xanh dương đậm** (~`#0A66FF`) cho nút/chips chọn; chữ **rất đậm** (font character kiểu Inter/Manrope weight 700–800), heading lớn; thẻ bo tròn lớn (~20–24px); chip xám nhạt (`#F2F3F5`); khoảng thở rộng, cảm giác "app gym hiện đại".
-- Copy UI: **tiếng Việt**; **tên bài tập tiếng Anh** (quyết định learner).
+- Copy UI: **tiếng Anh** (đổi tại build theo yêu cầu learner để nộp Devpost; trước đó spec chốt tiếng Việt); **tên bài tập tiếng Anh**.
 - Ảnh minh họa: RepDB flat 512px WebP, hiển thị vuông bo tròn. **Cơ thể MuscleMap**: tô đỏ (`monochromeColor` đỏ) đúng vùng cơ; nếu vùng không được thư viện tách → tô nhóm ở mức thô hơn + **nhãn chữ region** ngay cạnh, không giả vờ chính xác.
 - Attribution "Exercise data by RepDB (repdb.co)" ở màn About/Credits + README.
 
 ## Components
 
 ### App (session state machine)
-Giữ `phase` (`home | check | busyChoice | replacements | training | rest`), bài hiện tại, danh sách bài của Test Set sau khi đổi, set hiện tại, set đã xong. Một `useReducer`; không lưu đĩa. PRD ref: `prd.md > States and Boundaries`.
+`App.tsx` chỉ điều phối phase → screen; logic session nằm trong `lib/session.ts` (reducer thuần, test được). Giữ `phase` (`home | check | busy | alternatives | training | rest | finished`), `plan`, `queue` (slot còn phải tập; `queue[0]` là bài hiện tại), `deferred`, set hiện tại, set đã xong, `restEndsAt` + `restTarget`. Một `useReducer`; không lưu đĩa. PRD ref: `prd.md > States and Boundaries`.
 
 ### HomeScreen
 Thống kê mẫu (hardcode), streak, lịch chấm công (ma trận điểm trang trí), thẻ "Test Set" + nút ▶. Chỉ hiển thị. PRD ref: `prd.md > Screens and Layout`.
@@ -131,15 +131,16 @@ Rỗng → `[]` để UI hiện empty state. Không phụ thuộc React/Supabase
 ### State trong app (bộ nhớ)
 
 ```ts
-type Phase = 'home' | 'check' | 'busyChoice' | 'alternatives' | 'training' | 'rest';
+type Phase = 'home' | 'check' | 'busy' | 'alternatives' | 'training' | 'rest' | 'finished';
 type Session = {
   phase: Phase;
-  plan: PlanItem[];        // 5 bài; bài đã đổi thì thay tại chỗ
-  currentIndex: number;
-  deferred: string[];      // id bài bị hoãn (chọn "tập bài khác trước")
+  plan: Exercise[];        // 5 bài; bài đã đổi thì thay tại chỗ
+  queue: number[];         // slot còn phải tập; queue[0] = bài hiện tại
+  deferred: number[];      // slot bị hoãn (chọn "tập bài khác trước"), quay lại cuối queue
   currentSet: number;
-  completedSets: number[];
-  restEndsAt: number | null;
+  finishedSets: number;
+  restEndsAt: number | null;                       // deadline tuyệt đối theo Date.now()
+  restTarget: 'next-set' | 'next-exercise' | null;
 };
 ```
 Reload = mất session (chủ đích).
@@ -176,14 +177,19 @@ gym-plan-b/
 │   │   ├── TimerRing.tsx
 │   │   ├── Chip.tsx
 │   │   └── Sheet.tsx
+│   ├── hooks/
+│   │   └── useRestTimer.ts        # đếm ngược theo deadline tuyệt đối
 │   ├── lib/
 │   │   ├── recommendation.ts      # engine thuần
 │   │   ├── recommendation.test.ts
+│   │   ├── session.ts             # session reducer thuần (queue/defer/rest)
+│   │   ├── session.test.ts
+│   │   ├── explain.ts             # lý do + khác biệt sinh từ metadata
 │   │   ├── muscleMapMapping.ts    # taxonomy -> MuscleGroup enum
 │   │   └── supabase.ts
 │   ├── data/
-│   │   ├── seed.ts                # fallback offline + 5 bài plan
-│   │   └── testPlan.ts
+│   │   ├── seed.ts                # fallback offline + thứ tự Test Set
+│   │   └── exercises.ts           # load + buildTestPlan
 │   └── types.ts
 └── supabase/
     └── schema.sql             # DDL bảng + RLS select-only + seed import mẫu
@@ -235,7 +241,7 @@ gym-plan-b/
 
 ## Decisions and Open Issues
 
-**Learner quyết:** React + Vite + TS mobile-first (web trước, WebView/Expo sau); chạy local, **không deploy**; Supabase project mới, giữ UUID gốc, không copy user data/credentials; không khai báo/lọc theo thiết bị; tên bài tiếng Anh, UI tiếng Việt; kg = 99 placeholder; ảnh không dùng Lyfta; **hướng hình ảnh C — RepDB Free cho MVP, nâng style minh họa riêng của Gym Plan B sau cuộc thi** (learner xác nhận tại review spec).
+**Learner quyết:** React + Vite + TS mobile-first (web trước, WebView/Expo sau); chạy local, **không deploy**; Supabase project mới, giữ UUID gốc, không copy user data/credentials; không khai báo/lọc theo thiết bị; **tên bài tiếng Anh, toàn bộ UI tiếng Anh** (đổi tại build để nộp Devpost); kg = 99 placeholder; ảnh không dùng Lyfta; **hướng hình ảnh C - RepDB Free cho MVP, nâng style minh họa riêng của Gym Plan B sau cuộc thi** (learner xác nhận tại review spec).
 
 **Một điều chưa chắc (đã thống nhất cách kiểm):** MuscleMap có tách được region chi tiết (ngực trên/giữa/dưới, vai trước/giữa/sau) hay không. Cách kiểm: đọc `MUSCLE_GROUP_PARTS` trong `@musclemap/assets` ngay đầu build; bằng chứng = bảng map `lib/muscleMapMapping.ts` được điền hết hoặc ghi rõ phần fallback.
 

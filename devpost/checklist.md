@@ -9,7 +9,7 @@ Build mode: learn
 
 ## Slices
 
-- [ ] **1. App chạy được và hạt nhân hoạt động: danh sách bài thay thế được xếp hạng**
+- [x] **1. App chạy được và hạt nhân hoạt động: danh sách bài thay thế được xếp hạng**
   Becomes usable: Mở app ở localhost, thấy màn chính mẫu, bấm ▶ Test Set, tới sheet kiểm máy, bấm "Đang bận" → sheet hai lựa chọn → "Chọn bài đề xuất" → danh sách top 3 do **engine thật** xếp hạng từ dữ liệu seed (cùng vùng cơ, 80/20, tag Recommend / kiểu chuyển động khác, lý do). Chọn một bài → màn tập tối giản hiện bài mới đã thay vào vị trí cũ.
   Why now: Đây là kernel — nếu engine sai thì mọi thứ sau đó vô nghĩa. Scaffold nằm trong chính slice này; vòng lặp lõi chạy end-to-end ngay từ đầu để mọi slice sau có chỗ đứng.
   PRD ref: `prd.md > The Core Journey` (bước 1–5), `prd.md > Recommendation Engine`, `prd.md > Buổi tập và thay bài`
@@ -86,4 +86,6 @@ Activity mode: [live app and editor, explicit static fallback, focused alternati
 - Slice 1: Test Set được resolve theo **tên bài** (`TEST_PLAN_ORDER`) thay vì UUID seed, để khi import UUID thật từ Gym Tracker ở slice 3 không phải sửa logic kế hoạch.
 - Slice 1: nâng vitest lên 3.x để khớp Vite 6 (vitest 2 kéo Vite 5 riêng và làm `tsc` báo lỗi type của plugin).
 - Slice 1: chỉ bundle font Inter subset latin + vietnamese (đủ cho UI tiếng Việt, giảm số file font).
+- Build: **toàn bộ copy UI đổi sang tiếng Anh** theo yêu cầu learner (nộp Devpost); `prd.md` + `spec.md` đã cập nhật quyết định ngôn ngữ.
+- Slice 2: session reducer tách ra `lib/session.ts` (thuần, test được) với **queue slot** thay vì `currentIndex`, để hoãn bài = đưa slot về cuối queue; `restEndsAt` là deadline tuyệt đối; thêm `restTarget` để biết hết nghỉ thì sang set kế hay bài kế.
 

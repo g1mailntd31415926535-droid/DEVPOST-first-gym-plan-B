@@ -33,15 +33,3 @@ export interface RankedExercise {
   /** Only the single best same-movement candidate gets this tag. */
   recommended: boolean;
 }
-
-export type Phase = 'home' | 'check' | 'busy' | 'alternatives' | 'training' | 'finished';
-
-export interface SessionState {
-  phase: Phase;
-  plan: Exercise[];
-  currentIndex: number;
-  currentSet: number;
-  /** Ids swapped into the plan during this session, in slot order. */
-  swappedIds: string[];
-  finishedSets: number;
-}

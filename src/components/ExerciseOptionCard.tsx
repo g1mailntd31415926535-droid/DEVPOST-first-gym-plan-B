@@ -1,6 +1,6 @@
 import type { Exercise, RankedExercise } from '../types';
 import { DumbbellIcon } from '../components/icons';
-import { reasonFor } from '../lib/explain';
+import { differencesFor, reasonFor } from '../lib/explain';
 
 export function ExerciseOptionCard({
   base,
@@ -12,6 +12,7 @@ export function ExerciseOptionCard({
   onChoose: () => void;
 }) {
   const { exercise, recommended, isDifferentStyle } = ranked;
+  const differences = differencesFor(base, exercise);
 
   return (
     <button
@@ -35,27 +36,37 @@ export function ExerciseOptionCard({
             )}
             {isDifferentStyle && (
               <span className="rounded-chip bg-amber-100 px-2 py-0.5 text-[10px] font-extrabold uppercase tracking-wide text-amber-700">
-                Kiểu chuyển động khác
+                Different movement style
               </span>
             )}
             {!recommended && !isDifferentStyle && (
               <span className="rounded-chip bg-chip px-2 py-0.5 text-[10px] font-extrabold uppercase tracking-wide text-muted">
-                Thay thế
+                Swap
               </span>
             )}
           </div>
           <h3 className="mt-1 text-[15px] font-extrabold leading-tight">{exercise.name}</h3>
           <p className="mt-0.5 text-[11px] font-semibold text-muted">
-            {exercise.equipment ?? 'Không rõ thiết bị'} · {exercise.exerciseType}
+            {exercise.equipment ?? 'Unknown equipment'} · {exercise.exerciseType}
           </p>
         </div>
       </div>
 
       <p className="mt-2 text-[11px] leading-relaxed text-muted">{reasonFor(base, exercise)}</p>
 
+      {differences.length > 0 && (
+        <ul className="mt-1.5 space-y-0.5">
+          {differences.slice(0, 3).map((line) => (
+            <li key={line} className="text-[10px] font-medium leading-relaxed text-muted/90">
+              · {line}
+            </li>
+          ))}
+        </ul>
+      )}
+
       <div className="mt-2 flex flex-wrap gap-1.5">
         <span className="rounded-chip bg-chip px-2 py-0.5 text-[10px] font-bold text-ink/70">
-          {exercise.defaultSets} set
+          {exercise.defaultSets} sets
         </span>
         <span className="rounded-chip bg-chip px-2 py-0.5 text-[10px] font-bold text-ink/70">
           {exercise.defaultMinRep}–{exercise.defaultMaxRep} reps
