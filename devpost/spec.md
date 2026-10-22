@@ -41,7 +41,7 @@ Docs: [Vite](https://vite.dev/guide/) · [React](https://react.dev/reference/rea
 
 ## Where It Runs and How Someone Tries It
 
-- Runtime: a browser on the local machine (Windows). Requirements: **Node 20+**, npm; a **`.env.local`** file (gitignored) containing `VITE_SUPABASE_URL`, `VITE_SUPABASE_ANON_KEY`.
+- Runtime: a browser on the local machine (Windows). Requirements: **Node 20+**, npm. Supabase is **optional**: a `.env.local` file (gitignored) can provide `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY`; without it the app runs from the bundled seed and shows the offline banner.
 - Run: `npm install` → `npm run dev` → open `http://localhost:5173`.
 - Demo recording: DevTools → portrait device mode (390×844) to match the mockup.
 - Submission: **short demo video + public GitHub repository** (required). **No deployment** (learner decision); deployment does not replace the video/repository.
