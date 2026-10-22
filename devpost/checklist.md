@@ -9,59 +9,59 @@ Build mode: learn
 
 ## Slices
 
-- [x] **1. App chạy được và hạt nhân hoạt động: danh sách bài thay thế được xếp hạng**
-  Becomes usable: Mở app ở localhost, thấy màn chính mẫu, bấm ▶ Test Set, tới sheet kiểm máy, bấm "Đang bận" → sheet hai lựa chọn → "Chọn bài đề xuất" → danh sách top 3 do **engine thật** xếp hạng từ dữ liệu seed (cùng vùng cơ, 80/20, tag Recommend / kiểu chuyển động khác, lý do). Chọn một bài → màn tập tối giản hiện bài mới đã thay vào vị trí cũ.
-  Why now: Đây là kernel — nếu engine sai thì mọi thứ sau đó vô nghĩa. Scaffold nằm trong chính slice này; vòng lặp lõi chạy end-to-end ngay từ đầu để mọi slice sau có chỗ đứng.
-  PRD ref: `prd.md > The Core Journey` (bước 1–5), `prd.md > Recommendation Engine`, `prd.md > Buổi tập và thay bài`
+- [x] **1. The app runs and the kernel works: a ranked replacement list**
+  Becomes usable: Open the app on localhost, see the sample home screen, tap ▶ Test Set, reach the machine-check sheet, tap "Busy" → two-choice sheet → "Choose a suggested exercise" → a top-3 list ranked by the **real engine** from seed data (same muscle region, 80/20, Recommend / Different movement style tags, reasons). Choose an exercise → the minimal training screen shows the new exercise in the old slot.
+  Why now: This is the kernel — if the engine is wrong, everything after it is meaningless. The scaffold is part of this slice; the core loop runs end-to-end from the start so every later slice has somewhere to stand.
+  PRD ref: `prd.md > The Core Journey` (steps 1–5), `prd.md > Recommendation Engine`, `prd.md > Workout and Exercise Substitution`
   Spec ref: `spec.md > Stack`, `spec.md > File Structure`, `spec.md > Components` (`App`, `HomeScreen`, `CheckSheet`, `BusyChoiceSheet`, `ReplacementListScreen`, `lib/recommendation.ts`, `data/exercises.ts`), `spec.md > Verification Plan`
-  Build: Scaffold Vite + React + TS + Tailwind theo file structure; seed data cho 5 bài gốc + ứng viên (metadata theo bảng phân loại đã duyệt); viết `lib/recommendation.ts` thuần + `recommendation.test.ts`; dựng 4 màn/sheet đầu và state machine `useReducer`; kg = 99 placeholder, tên bài tiếng Anh, UI tiếng Việt.
-  Verify (mechanical): `npm.cmd run build` (hoặc `tsc --noEmit`) không lỗi; `npm.cmd test` passes các case: cùng vùng mới vào danh sách; Incline không trả Flat/Middle; khác family bị tag "kiểu chuyển động khác" và không được Recommend; `needs-review` không lọt top; vùng không có ứng viên → danh sách rỗng. Dev server khởi động không lỗi console.
-  Learner check: Mở `http://localhost:5173`, bấm vào Test Set, bấm "Đang bận" → "Chọn bài đề xuất", xem danh sách có đúng kiểu "một bài cùng vùng cơ đứng đầu kèm lý do" như bạn hình dung không, và nói cảm giác giao diện so với mockup.
+  Build: Scaffold Vite + React + TS + Tailwind according to the file structure; seed data for the 5 originals + candidates (metadata per the approved classification table); write pure `lib/recommendation.ts` + `recommendation.test.ts`; build the first 4 screens/sheets and the `useReducer` state machine; kg = 99 placeholder, English exercise names, Vietnamese UI at that point (later switched to English).
+  Verify (mechanical): `npm.cmd run build` (or `tsc --noEmit`) without errors; `npm.cmd test` passes these cases: only same-region exercises enter the list; Incline does not return Flat/Middle; different-family exercises get the "Different movement style" tag and are never Recommend; `needs-review` never enters the top; a region with no candidates → empty list. Dev server starts without console errors.
+  Learner check: Open `http://localhost:5173`, tap Test Set, tap "Busy" → "Choose a suggested exercise", check whether the list feels like "one same-region exercise at the top with a reason" as imagined, and describe how the UI feels versus the mockup.
   Commit: `feat: ranked replacement list with recommendation engine`
 
-- [x] **2. Buổi tập hoàn chỉnh: màn tập, đồng hồ nghỉ, và lựa chọn "tập bài khác trước"**
-  Becomes usable: Từ bài đã thay, màn tập hiển thị đủ chips (khóa tạ 99, khoảng rep, nghỉ), set hiện tại + chip S1–S4, "Tiếp theo"; bấm "Hoàn thành set" → màn nghỉ đếm ngược đúng theo `default_rest_seconds`, có "Bỏ qua – tập tiếp", hết giờ tự sang set kế; chọn "Bài khác trong giáo án" thì bài bị bận được hoãn, quay lại vẫn hỏi lại máy trống không; đi hết Test Set tới màn kết thúc buổi.
-  Why now: Hoàn thiện vòng lặp người dùng thật (tập → nghỉ → bài kế) trước khi nối dữ liệu thật, để lỗi hành vi lộ ra khi còn rẻ; đồng hồ là chỗ dễ sai khi tab bị ẩn.
-  PRD ref: `prd.md > The Core Journey` (bước 6–8), `prd.md > Buổi tập và thay bài`, `prd.md > States and Boundaries`
-  Spec ref: `spec.md > Components` (`TrainingScreen`, `RestScreen`, `App`), `spec.md > Data Model` (state shape), `spec.md > Important Failure Modes` (đồng hồ khi tab ẩn)
-  Build: TrainingScreen + RestScreen + `TimerRing` + `useRestTimer` dựa trên `restEndsAt`; logic hoãn bài (`deferred`) và quay lại; màn kết thúc buổi; empty state cho danh sách thay thế rỗng.
-  Verify (mechanical): `npm.cmd run build` sạch; vitest cho logic hoãn/đổi bài (bài bị bận vẫn nằm trong danh sách, đổi xong đúng vị trí); chạy dev server, bấm hết một buổi, xác nhận đồng hồ đếm đúng và "Bỏ qua" sang set kế; ẩn tab 10 giây rồi quay lại, đồng hồ vẫn đúng.
-  Learner check: Chạy trọn một buổi tập trong app — thay một bài, hoàn thành 2 set, dùng "Bỏ qua – tập tiếp", thử nút "Bài khác trong giáo án" — và báo chỗ nào chậm/khó hiểu so với cách bạn tập thật.
+- [x] **2. Complete workout: training screen, rest timer, and "do another exercise first"**
+  Becomes usable: From a substituted exercise, the training screen shows all chips (weight lock 99, rep range, rest), current set + S1–S4 chips, "Next up"; tapping "Complete set" → rest screen counts down according to `default_rest_seconds`, with "Skip — continue"; when time expires, advances to the next set automatically; choosing "Another exercise from the plan" defers the busy exercise, and when it returns the app asks again whether the machine is free; run through the whole Test Set to the finish screen.
+  Why now: Complete the real user loop (train → rest → next exercise) before connecting real data, so behavioral bugs surface while they are cheap; the timer is the easiest thing to get wrong when the tab is hidden.
+  PRD ref: `prd.md > The Core Journey` (steps 6–8), `prd.md > Workout and Exercise Substitution`, `prd.md > States and Boundaries`
+  Spec ref: `spec.md > Components` (`TrainingScreen`, `RestScreen`, `App`), `spec.md > Data Model` (state shape), `spec.md > Important Failure Modes` (timer when the tab is hidden)
+  Build: TrainingScreen + RestScreen + `TimerRing` + `useRestTimer` based on `restEndsAt`; defer (`deferred`) and return logic; finish screen; empty state for an empty replacement list.
+  Verify (mechanical): `npm.cmd run build` clean; vitest for defer/substitute logic (a busy exercise stays in the list, and after substitution it lands in the correct slot); run the dev server, complete a full workout, confirm the countdown is correct and "Skip" advances to the next set; hide the tab for 10 seconds and return — the timer is still correct.
+  Learner check: Run a complete workout in the app — substitute an exercise, complete 2 sets, use "Skip — continue", try "Another exercise from the plan" — and report anything slow or confusing compared with how you actually train.
   Commit: `feat: full training session with rest timer and deferred exercises`
 
-- [x] **3. Dữ liệu thật: Supabase project mới, giữ nguyên Exercise ID, có fallback offline**
-  Becomes usable: App đọc bảng `exercises` từ Supabase mới (chỉ đọc, RLS select-only), hiển thị đúng 5 bài Test Set + ứng viên từ dữ liệu thật; nếu thiếu `.env.local` hoặc mất mạng → tự chạy seed + banner "đang dùng dữ liệu mẫu", demo không chết.
-  Why now: Sau khi hành vi đã đúng, thay nguồn dữ liệu là thay đúng một lớp; làm sớm hơn sẽ trộn lỗi dữ liệu với lỗi UI. Đây cũng là chỗ kiểm chứng yêu cầu "không đụng Supabase cũ, giữ UUID".
-  PRD ref: `prd.md > Dữ liệu`, `prd.md > States and Boundaries`
-  Spec ref: `spec.md > Data Model` (bảng + migration), `spec.md > External Services and Dependencies` (Supabase), `spec.md > Important Failure Modes`
-  Build: `supabase/schema.sql` (DDL + RLS select-only) và script/hướng dẫn import giữ `id`; `lib/supabase.ts` + `data/exercises.ts` fetch/fallback; `.env.example`; learner tự tạo project + chạy SQL + export/import đúng các dòng cần (không copy auth/users/credentials, không đụng project cũ).
-  Verify (mechanical): Chạy `select count(*)` trên project mới → đúng số dòng đã import; gọi REST `GET /rest/v1/exercises?select=id,name` trả 200 với UUID khớp bản cũ; app với `.env.local` hiển thị dữ liệu Supabase (không banner); tạm đổi key sai → app chuyển seed + banner; xác nhận project cũ không có thay đổi nào.
-  Learner check: Mở app khi đã cấu hình Supabase, xác nhận tên bài/sets/reps/rest hiển thị giống dữ liệu app gym cũ của bạn; thử tạm xoá `.env.local` xem banner dữ liệu mẫu có hiện và app vẫn dùng được không.
+- [x] **3. Real data: new Supabase project, preserved Exercise IDs, offline fallback**
+  Becomes usable: The app reads the `exercises` table from the new Supabase project (read-only, RLS select-only), showing the real 5 Test Set exercises + candidates; if `.env.local` is missing or the network is down → automatically use the seed + "using sample data" banner, so the demo does not die.
+  Why now: After behavior is correct, swapping the data source is a one-layer change; doing it earlier would mix data bugs with UI bugs. This is also where we verify "do not touch the old Supabase, keep UUIDs".
+  PRD ref: `prd.md > Data`, `prd.md > States and Boundaries`
+  Spec ref: `spec.md > Data Model` (table + migration), `spec.md > External Services and Dependencies` (Supabase), `spec.md > Important Failure Modes`
+  Build: `supabase/schema.sql` (DDL + RLS select-only) and an import script/guide that preserves `id`; `lib/supabase.ts` + `data/exercises.ts` fetch/fallback; `.env.example`; the learner creates the project + runs the SQL + exports/imports only the needed rows (no auth/users/credentials, no changes to the old project).
+  Verify (mechanical): Run `select count(*)` on the new project → correct imported row count; call REST `GET /rest/v1/exercises?select=id,name` and get 200 with UUIDs matching the old copy; app with `.env.local` shows Supabase data (no banner); temporarily use a wrong key → app falls back to seed + banner; confirm the old project has no changes.
+  Learner check: Open the app with Supabase configured, confirm exercise names/sets/reps/rest match your old gym app data; temporarily remove `.env.local` and check that the sample-data banner appears and the app still works.
   Commit: `feat: connect Supabase read-only data with offline seed fallback`
 
-- [ ] **4. Hình ảnh: ảnh động tác RepDB + cơ thể tô đỏ vùng cơ (MuscleMap)**
-  Becomes usable: Mỗi card thay thế và màn tập có ảnh minh họa động tác (RepDB, chỉ các bài trong Test Set + ứng viên), kèm hình cơ thể tô đỏ đúng nhóm/vùng cơ; nếu MuscleMap không tách được region cụ thể → tô nhóm thô + nhãn chữ region (không giả chính xác); màn Credits hiển thị attribution RepDB.
-  Why now: Đây là lớp "kể chuyện" của sản phẩm; làm sau khi dữ liệu thật ổn để ảnh gắn đúng `id`, và là chỗ có rủi ro kỹ thuật đã biết (mức tách vùng của MuscleMap) cần lộ ra sớm.
+- [x] **4. Imagery: RepDB exercise illustrations + red-highlighted muscle regions (MuscleMap)**
+  Becomes usable: Every replacement card and the training screen has an exercise illustration (RepDB, only Test Set exercises + candidates), plus a body figure with the correct muscle group/region highlighted in red; if MuscleMap cannot split a specific region → use the coarse group + a text region label (never pretend to be exact); the Credits screen shows RepDB attribution.
+  Why now: This is the product's "storytelling" layer; do it after real data is stable so images attach to the right `id`, and surface the known technical risk (MuscleMap's region granularity) early.
   PRD ref: `prd.md > Look and Feel`, `prd.md > Screens and Layout`
-  Spec ref: `spec.md > Components` (`MuscleFigure`), `spec.md > External Services and Dependencies` (RepDB license + MuscleMap), `spec.md > Decisions and Open Issues` (điều chưa chắc của MuscleMap)
-  Build: Kiểm tra `MUSCLE_GROUP_PARTS` của `@musclemap/assets`; điền `lib/muscleMapMapping.ts` hoặc ghi rõ fallback; tải đúng file ảnh RepDB cần dùng vào `public/exercises/` (không đóng gói cả dataset, không dùng premium-samples), gắn `image_asset`; dựng `MuscleFigure`, ảnh trong card + màn tập; CreditsScreen + attribution.
-  Verify (mechanical): Bảng mapping phủ hết 5 vùng cần (hoặc fallback được ghi rõ); mọi card có ảnh load được (không 404 trong console); tô đỏ đúng nhóm ở 5 bài gốc; attribution hiển thị trong app.
-  Learner check: Mở một danh sách thay thế và xem ảnh + hình cơ thể — nhóm cơ tô đỏ có đúng chỗ bạn kỳ vọng không, style ảnh có chấp nhận được cho video demo không?
+  Spec ref: `spec.md > Components` (`MuscleFigure`), `spec.md > External Services and Dependencies` (RepDB license + MuscleMap), `spec.md > Decisions and Open Issues` (MuscleMap uncertainty)
+  Build: Check `MUSCLE_GROUP_PARTS` in `@musclemap/assets`; fill in `lib/muscleMapMapping.ts` or document the fallback; download only the needed RepDB image files into `public/exercises/` (do not bundle the whole dataset, do not use premium-samples), attach `image_asset`; build `MuscleFigure`, images in cards + training screen; CreditsScreen + attribution.
+  Verify (mechanical): Mapping table covers all 5 required regions (or the fallback is documented); every card image loads (no 404 in console); correct group highlighted on all 5 original exercises; attribution visible in the app.
+  Learner check: Open a replacement list and inspect the images + body figures — is the highlighted muscle where you expect, and is the image style acceptable for the demo video?
   Commit: `feat: exercise illustrations and red muscle-region highlighting`
 
-- [ ] **5. Đóng gói demo: polish theo mockup, trạng thái rỗng, README và attribution**
-  Becomes usable: Toàn bộ hành trình mượt và đúng chất mockup (màu, bo góc, typography, khoảng thở); empty state "Chưa có bài thay thế phù hợp (vùng X)" đúng chỗ; README có cách chạy, attribution RepDB, và mục minh bạch tài nguyên (dữ liệu tái sử dụng từ Gym Tracker); app sẵn sàng quay video 1 phút theo kịch bản PRD.
-  Why now: Polish sau cùng để không phí công chỉnh thứ sẽ đổi; README/attribution là điều kiện nộp bài, không phải trang trí.
+- [ ] **5. Demo packaging: mockup polish, empty states, README and attribution**
+  Becomes usable: The whole journey is smooth and faithful to the mockup (color, rounded corners, typography, spacing); the empty state "No suitable substitute yet (region X)" appears in the right place; the README explains how to run, RepDB attribution, and a resource-transparency section (data reused from Gym Tracker); the app is ready for a 1-minute demo video following the PRD script.
+  Why now: Polish last so effort is not wasted on things that will change; README/attribution are submission requirements, not decoration.
   PRD ref: `prd.md > Look and Feel`, `prd.md > Non-Goals`, `prd.md > What We're Building`
   Spec ref: `spec.md > Look and Feel`, `spec.md > Where It Runs and How Someone Tries It`, `spec.md > External Services and Dependencies`
-  Build: Chỉnh style theo mockup; kiểm tra empty state, banner offline, copy UI; viết README (chạy app, attribution, transparency note theo scope); dọn lỗi console; rà lại không có secret/learner-profile trong repo.
-  Verify (mechanical): `npm.cmd run build` + `npm.cmd test` sạch; mở DevTools 390×844 đối chiếu mockup; chạy đúng kịch bản demo 1 phút không lỗi console; README có đủ 3 mục bắt buộc; `git status` sạch và không có `.env.local`/`learner-profile.md` bị track.
-  Learner check: Tự bấm lại toàn bộ kịch bản demo trên khung điện thoại, xem có chỗ nào lệch so với hình dung ban đầu, rồi thử quay nháp 1 phút bằng điện thoại/quay màn hình.
+  Build: Adjust styles to match the mockup; check empty states, offline banner, UI copy; write the README (run instructions, attribution, transparency note per scope); clean console errors; verify no secrets/learner profile are tracked in the repo.
+  Verify (mechanical): `npm.cmd run build` + `npm.cmd test` clean; open DevTools at 390×844 and compare with the mockup; run the full 1-minute demo script without console errors; README has all 3 required sections; `git status` clean and `.env.local`/`learner-profile.md` are not tracked.
+  Learner check: Click through the whole demo script on the phone frame, look for anything that differs from the original vision, then try a rough 1-minute recording with a phone/screen recorder.
   Commit: `chore: demo polish, README and attribution`
 
 ## Hands-on Checkpoints
 
-- [x] Early usable behavior explored — sau slice 1 (danh sách thay thế xếp hạng)
+- [x] Early usable behavior explored — after slice 1 (ranked replacement list)
 - [ ] Final kick-the-tires exploration and feedback completed
 
 ## Final Review
@@ -82,18 +82,17 @@ Activity mode: [live app and editor, explicit static fallback, focused alternati
 
 ## Revisions
 
-- Slice 1: lựa chọn "Bài khác trong giáo án tập trước" đã hiện trong sheet nhưng còn disabled; hành vi hoãn bài thật thuộc slice 2 (đúng thứ tự đã duyệt).
-- Slice 1: Test Set được resolve theo **tên bài** (`TEST_PLAN_ORDER`) thay vì UUID seed, để khi import UUID thật từ Gym Tracker ở slice 3 không phải sửa logic kế hoạch.
-- Slice 1: nâng vitest lên 3.x để khớp Vite 6 (vitest 2 kéo Vite 5 riêng và làm `tsc` báo lỗi type của plugin).
-- Slice 1: chỉ bundle font Inter subset latin + vietnamese (đủ cho UI tiếng Việt, giảm số file font).
-- Build: **toàn bộ copy UI đổi sang tiếng Anh** theo yêu cầu learner (nộp Devpost); `prd.md` + `spec.md` đã cập nhật quyết định ngôn ngữ.
-- Slice 2: session reducer tách ra `lib/session.ts` (thuần, test được) với **queue slot** thay vì `currentIndex`, để hoãn bài = đưa slot về cuối queue; `restEndsAt` là deadline tuyệt đối; thêm `restTarget` để biết hết nghỉ thì sang set kế hay bài kế.
-- Slice 2 (feedback learner): "Do another exercise first" mở **danh sách bài còn lại trong plan** để user tự chọn (không tự nhảy sang bài kế), có nút Back ở mọi trạng thái, và empty state + Back khi bài hiện tại là bài duy nhất còn lại. `prd.md` + `spec.md` đã cập nhật.
-- Slice 3 (code path): `loadExercises()` async + loading gate; Supabase lỗi/thiếu config/thiếu bài Test Set → seed + banner "Sample data". `lib/supabase.ts` chỉ dùng anon key; `supabase/schema.sql` bật RLS select-only, không có policy ghi; `supabase/IMPORT.md` hướng dẫn export read-only + insert giữ UUID. **Chưa import dữ liệu thật** — chờ learner export và duyệt metadata.
-- Slice 3 (dữ liệu): export full 100 bài từ project cũ; import **26 dòng** (5 Test Set + ứng viên đã phân loại mỗi vùng + 3 `needs-review`). Giữ UUID gốc, tên rút về nhãn tiếng Anh đã duyệt, sets/reps/rest/equipment copy nguyên. Seed offline viết lại y hệt DB.
-- Slice 3 (mở rộng theo yêu cầu learner): thêm Smith Machine Bench Press, Pec Deck Fly, One-Arm Dumbbell Row, Goblet Squat; nâng Low-to-High Cable Fly, Push-Up, Chin-Up, Front Squat lên `classified`. Kết quả: Flat Bench có 5 ứng viên (top 3 + xem thêm), Squat/Lat Pulldown có 4; Shoulders/Side vẫn 2 vì dữ liệu thật không có bài khác — không bịa.
-- Slice 3 verified: REST trả **26 dòng / 23 classified / 3 needs-review**, đủ 4 bài mới, UUID khớp export; app chạy dữ liệu thật, không còn banner mẫu. Slice 3 tick.
-- Slice 4 (built): tải **26 ảnh RepDB flat 512px WebP** vào `public/exercises/` (chỉ ảnh cần dùng, không đóng gói dataset/premium-samples); gắn `image_asset` trong seed + SQL (idempotent, cần chạy lại `seed.sql` để DB có path — app vẫn có fallback theo tên). `MuscleFigure` dùng MuscleMap 1.1: `SHOULDERS_SIDE`, `LATS`, `QUADS` chính xác; chest không có path trên/giữa nên tô cả nhóm + **mask gradient xấp xỉ** upper/middle/lower, luôn ghi "(approx.)". Ảnh + hình cơ có trong card thay thế và màn tập; **màn Pick exercise cũng có ảnh động tác**; thêm CreditsScreen + link RepDB ở Home.
-- Slice 4 (learner feedback): yêu cầu upper chest chỉ tô vùng trên và thêm ảnh ở màn Pick. Đã đổi chest sang mask xấp xỉ (không giả chính xác, có nhãn) và thay icon dumbbell bằng ảnh RepDB trong picker.
-- Slice 4 verified (mechanical): headless Chrome 390×844 — ảnh load 200 ở cả 5 vùng, không lỗi console/404; Lat Pulldown hiện đúng mặt sau, Side delts đúng vai ngang, chest hiện đủ ngực kèm nhãn; Flat Bench có 5 ứng viên + "Show 2 more"; Credits mở được. **Chờ learner xem style/độ đúng vùng cơ rồi mới tick.**
-
+- Slice 1: the "Another exercise from the plan first" option appeared in the sheet but was still disabled; the real defer behavior belongs to slice 2 (the approved order).
+- Slice 1: the Test Set is resolved by **exercise name** (`TEST_PLAN_ORDER`) instead of seed UUIDs, so importing real UUIDs from Gym Tracker in slice 3 does not require changing the plan logic.
+- Slice 1: upgraded vitest to 3.x to match Vite 6 (vitest 2 pulled its own Vite 5 and made `tsc` report a plugin type error).
+- Slice 1: bundle only the Inter latin + vietnamese subsets (enough for the Vietnamese UI, fewer font files). Superseded when the UI switched to English.
+- Build: **all UI copy switched to English** at the learner's request (Devpost submission); `prd.md` + `spec.md` updated with the language decision.
+- Slice 2: session reducer extracted to `lib/session.ts` (pure, testable) with **queue slots** instead of `currentIndex`, so deferring an exercise means moving its slot to the end of the queue; `restEndsAt` is an absolute deadline; added `restTarget` to know whether rest ends into the next set or the next exercise.
+- Slice 2 (learner feedback): "Do another exercise first" opens the **list of remaining exercises in the plan** for the user to choose (it does not jump to the next exercise automatically), with a Back button in every state and an empty state + Back when the current exercise is the only one left. `prd.md` + `spec.md` updated.
+- Slice 3 (code path): `loadExercises()` async + loading gate; Supabase error/missing config/missing Test Set exercises → seed + "Sample data" banner. `lib/supabase.ts` uses only the anon key; `supabase/schema.sql` enables RLS select-only with no write policies; `supabase/IMPORT.md` explains the read-only export + insert that preserves UUIDs. **Real data not imported yet** — waiting for the learner to export and approve metadata.
+- Slice 3 (data): exported all 100 exercises from the old project; imported **26 rows** (5 Test Set + classified candidates per region + 3 `needs-review`). Kept original UUIDs, shortened names to approved English labels, and copied sets/reps/rest/equipment unchanged. Offline seed rewritten to match the DB exactly.
+- Slice 3 (expansion at the learner's request): added Smith Machine Bench Press, Pec Deck Fly, One-Arm Dumbbell Row, Goblet Squat; promoted Low-to-High Cable Fly, Push-Up, Chin-Up, Front Squat to `classified`. Result: Flat Bench has 5 candidates (top 3 + show more), Squat/Lat Pulldown have 4; Shoulders/Side still has 2 because the real data has no other exercise — no padding.
+- Slice 3 verified: REST returned **26 rows / 23 classified / 3 needs-review**, all 4 new exercises present, UUIDs matching the export; app runs on real data with no sample banner. Slice 3 ticked.
+- Slice 4 (built): downloaded **26 RepDB flat 512px WebP images** into `public/exercises/` (only the needed images, no dataset/premium-samples bundling); added `image_asset` to seed + SQL (idempotent; re-run `seed.sql` so the DB has paths — the app also falls back by name). `MuscleFigure` uses MuscleMap 1.1: `SHOULDERS_SIDE`, `LATS`, `QUADS` are exact; chest has no upper/middle path, so the whole group is colored and an **approximate gradient mask** emphasizes upper/middle/lower, always labeled "(approx.)". Images + body figures appear on replacement cards and the training screen; **the Pick exercise screen also has exercise images**; added CreditsScreen + RepDB link on Home.
+- Slice 4 (learner feedback): requested upper-chest-only highlighting and images on the Pick screen. Chest switched to the approximate mask (not claimed exact, labeled) and the dumbbell icon was replaced with RepDB images in the picker.
+- Slice 4 verified (mechanical): headless Chrome at 390×844 — images load with 200 in all 5 regions, no console/404 errors; Lat Pulldown shows the back view, Side delts show the side shoulder, chest shows the approximate region with its label; Flat Bench has 5 candidates + "Show 2 more"; Credits opens. Learner reviewed the style/region accuracy and approved.
