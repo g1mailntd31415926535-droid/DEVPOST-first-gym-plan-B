@@ -1,6 +1,6 @@
 import type { SupabaseClient } from '@supabase/supabase-js';
 import type { ClassifyStatus, Exercise, ExerciseType, MovementFamily, MuscleGroup } from '../types';
-import { SEED_EXERCISES, TEST_PLAN_ORDER } from './seed';
+import { bundledImageFor, SEED_EXERCISES, TEST_PLAN_ORDER } from './seed';
 import { supabase } from '../lib/supabase';
 
 export type CatalogSource = 'seed' | 'supabase';
@@ -64,7 +64,8 @@ export function mapExerciseRow(row: ExerciseRow): Exercise {
     movementPattern: row.movement_pattern,
     exerciseType: row.exercise_type as ExerciseType,
     classifyStatus: row.classify_status as ClassifyStatus,
-    imageAsset: row.image_asset,
+    // Older Supabase rows may not have image_asset yet; use the bundled copy.
+    imageAsset: row.image_asset ?? bundledImageFor(row.name),
   };
 }
 

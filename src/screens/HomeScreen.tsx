@@ -3,10 +3,12 @@ const trainedDays = [2, 5, 6, 9, 12, 16, 19, 23];
 
 export function HomeScreen({
   onStart,
+  onCredits,
   dataSource,
   dataNote,
 }: {
   onStart: () => void;
+  onCredits: () => void;
   dataSource: 'seed' | 'supabase';
   dataNote?: string;
 }) {
@@ -137,9 +139,26 @@ export function HomeScreen({
         </p>
       </section>
 
-      <p className="mt-6 text-center text-[11px] font-semibold text-muted">
-        Proof-of-concept demo · Exercise data: RepDB Free
-      </p>
+      <div className="mt-6 text-center">
+        <button
+          type="button"
+          onClick={onCredits}
+          className="text-[11px] font-extrabold uppercase tracking-wide text-brand underline decoration-brand/30 underline-offset-2"
+        >
+          Credits &amp; data sources
+        </button>
+        <p className="mt-2 text-[11px] font-semibold leading-relaxed text-muted">
+          Proof-of-concept demo · Exercise data &amp; illustrations by{' '}
+          <a
+            href="https://repdb.co/"
+            target="_blank"
+            rel="noreferrer"
+            className="font-bold text-brand underline decoration-brand/30 underline-offset-2"
+          >
+            RepDB (repdb.co)
+          </a>
+        </p>
+      </div>
     </div>
   );
 }

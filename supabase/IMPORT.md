@@ -39,7 +39,7 @@ uncertain candidates kept as `needs-review` (they never appear in swap results).
 - Names use the approved English labels; Vietnamese translations are stripped.
 - `default_sets / min_rep / max_rep / rest / equipment` are copied unchanged from the old rows.
 - `on conflict (id) do update` makes the file safe to re-run after a taxonomy fix.
-- `image_asset` stays `null` until the RepDB illustrations are added (slice 4).
+- `image_asset` is filled by `seed.sql` with the bundled RepDB path (e.g. `/exercises/incline-barbell-press.webp`). Re-run `seed.sql` after pulling the images; the app also falls back to the bundled path by exercise name if an older row still has `null`.
 
 ## 4. Verify before wiring the app
 

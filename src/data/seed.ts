@@ -18,6 +18,7 @@ export const SEED_EXERCISES: Exercise[] = [
   make({
     id: '7a6d5f7b-68f7-a9c3-0976-47c8ea85343c',
     name: 'Incline Barbell Press',
+    imageAsset: '/exercises/incline-barbell-press.webp',
     defaultSets: 3,
     defaultMinRep: 6,
     defaultMaxRep: 10,
@@ -32,6 +33,7 @@ export const SEED_EXERCISES: Exercise[] = [
   make({
     id: '1f9b0699-9811-a441-8a01-0fc93c810e5e',
     name: 'Flat Bench Press',
+    imageAsset: '/exercises/flat-bench-press.webp',
     defaultSets: 3,
     defaultMinRep: 6,
     defaultMaxRep: 10,
@@ -46,6 +48,7 @@ export const SEED_EXERCISES: Exercise[] = [
   make({
     id: '8c58c437-f8ad-797c-3af1-abaa5188835d',
     name: 'Lateral Raise',
+    imageAsset: '/exercises/lateral-raise.webp',
     defaultSets: 3,
     defaultMinRep: 10,
     defaultMaxRep: 15,
@@ -60,6 +63,7 @@ export const SEED_EXERCISES: Exercise[] = [
   make({
     id: 'd1be49f9-9bd6-6b7e-93b0-fc4f72bd5a5d',
     name: 'Lat Pulldown',
+    imageAsset: '/exercises/lat-pulldown.webp',
     defaultSets: 3,
     defaultMinRep: 8,
     defaultMaxRep: 12,
@@ -74,6 +78,7 @@ export const SEED_EXERCISES: Exercise[] = [
   make({
     id: '1382982e-3cb2-597e-1076-9027e45ee507',
     name: 'Squat',
+    imageAsset: '/exercises/squat.webp',
     defaultSets: 3,
     defaultMinRep: 6,
     defaultMaxRep: 10,
@@ -90,6 +95,7 @@ export const SEED_EXERCISES: Exercise[] = [
   make({
     id: '95480247-9686-a23a-30c1-0c7ccfb2b324',
     name: 'Incline Dumbbell Press',
+    imageAsset: '/exercises/incline-dumbbell-press.webp',
     defaultSets: 3,
     defaultMinRep: 8,
     defaultMaxRep: 12,
@@ -104,6 +110,7 @@ export const SEED_EXERCISES: Exercise[] = [
   make({
     id: 'bb29f49e-3ec2-da74-92a8-44232068acab',
     name: 'Smith Machine Incline Press',
+    imageAsset: '/exercises/smith-machine-incline-press.webp',
     defaultSets: 3,
     defaultMinRep: 8,
     defaultMaxRep: 12,
@@ -118,6 +125,7 @@ export const SEED_EXERCISES: Exercise[] = [
   make({
     id: 'a9de94cb-46f3-217e-9d32-9b31fb81d410',
     name: 'Low-to-High Cable Fly',
+    imageAsset: '/exercises/low-to-high-cable-fly.webp',
     defaultSets: 3,
     defaultMinRep: 10,
     defaultMaxRep: 15,
@@ -134,6 +142,7 @@ export const SEED_EXERCISES: Exercise[] = [
   make({
     id: 'e31cb09b-779d-956d-2d2f-ba314c291194',
     name: 'Dumbbell Bench Press',
+    imageAsset: '/exercises/dumbbell-bench-press.webp',
     defaultSets: 3,
     defaultMinRep: 8,
     defaultMaxRep: 12,
@@ -148,6 +157,7 @@ export const SEED_EXERCISES: Exercise[] = [
   make({
     id: '6bcde17a-7ae5-9fe3-409a-349982b98392',
     name: 'Machine Chest Press',
+    imageAsset: '/exercises/machine-chest-press.webp',
     defaultSets: 3,
     defaultMinRep: 8,
     defaultMaxRep: 12,
@@ -162,6 +172,7 @@ export const SEED_EXERCISES: Exercise[] = [
   make({
     id: '5cea0c17-9c72-4030-3ea8-e5be61463786',
     name: 'Cable Fly',
+    imageAsset: '/exercises/cable-fly.webp',
     defaultSets: 3,
     defaultMinRep: 10,
     defaultMaxRep: 15,
@@ -177,6 +188,7 @@ export const SEED_EXERCISES: Exercise[] = [
   make({
     id: '60ee059c-93c2-b86e-be4c-1acd52e7a0c4',
     name: 'Push-Up',
+    imageAsset: '/exercises/push-up.webp',
     defaultSets: 3,
     defaultMinRep: 10,
     defaultMaxRep: 15,
@@ -191,6 +203,7 @@ export const SEED_EXERCISES: Exercise[] = [
   make({
     id: 'b8587746-6555-4c70-cf25-ec784b2fbba3',
     name: 'Smith Machine Bench Press',
+    imageAsset: '/exercises/smith-machine-bench-press.webp',
     defaultSets: 3,
     defaultMinRep: 8,
     defaultMaxRep: 12,
@@ -205,6 +218,7 @@ export const SEED_EXERCISES: Exercise[] = [
   make({
     id: '6b85f086-7210-e0dc-cb46-fd4875da86bb',
     name: 'Pec Deck Fly',
+    imageAsset: '/exercises/pec-deck-fly.webp',
     defaultSets: 3,
     defaultMinRep: 10,
     defaultMaxRep: 15,
@@ -221,6 +235,7 @@ export const SEED_EXERCISES: Exercise[] = [
   make({
     id: '2f14b062-c517-3f70-1e61-5e34733f2fae',
     name: 'Cable Lateral Raise',
+    imageAsset: '/exercises/cable-lateral-raise.webp',
     defaultSets: 3,
     defaultMinRep: 10,
     defaultMaxRep: 15,
@@ -235,6 +250,7 @@ export const SEED_EXERCISES: Exercise[] = [
   make({
     id: '30a1355e-ad45-3265-c99b-b16549a60c60',
     name: 'Machine Lateral Raise',
+    imageAsset: '/exercises/machine-lateral-raise.webp',
     defaultSets: 3,
     defaultMinRep: 10,
     defaultMaxRep: 15,
@@ -251,6 +267,7 @@ export const SEED_EXERCISES: Exercise[] = [
   make({
     id: '80e38928-4bb0-5232-9cc1-21a3fae085f0',
     name: 'Pull-Up',
+    imageAsset: '/exercises/pull-up.webp',
     defaultSets: 3,
     defaultMinRep: 6,
     defaultMaxRep: 10,
@@ -265,6 +282,7 @@ export const SEED_EXERCISES: Exercise[] = [
   make({
     id: '605ea42e-de97-cb9f-1c31-0729c45ed23f',
     name: 'Seated Cable Row',
+    imageAsset: '/exercises/seated-cable-row.webp',
     defaultSets: 3,
     defaultMinRep: 8,
     defaultMaxRep: 12,
@@ -279,6 +297,7 @@ export const SEED_EXERCISES: Exercise[] = [
   make({
     id: '62fa6b05-1bb8-f7b6-c587-6c3df03aff79',
     name: 'One-Arm Dumbbell Row',
+    imageAsset: '/exercises/one-arm-dumbbell-row.webp',
     defaultSets: 3,
     defaultMinRep: 8,
     defaultMaxRep: 12,
@@ -293,6 +312,7 @@ export const SEED_EXERCISES: Exercise[] = [
   make({
     id: '420c8581-366f-313c-e451-c7ab91d9936b',
     name: 'Chin-Up',
+    imageAsset: '/exercises/chin-up.webp',
     defaultSets: 3,
     defaultMinRep: 6,
     defaultMaxRep: 10,
@@ -307,6 +327,7 @@ export const SEED_EXERCISES: Exercise[] = [
   make({
     id: '599ddcab-cd1c-314f-3d0f-0efee2dc48ae',
     name: 'Straight-Arm Pulldown',
+    imageAsset: '/exercises/straight-arm-pulldown.webp',
     defaultSets: 3,
     defaultMinRep: 10,
     defaultMaxRep: 15,
@@ -324,6 +345,7 @@ export const SEED_EXERCISES: Exercise[] = [
   make({
     id: '9bdd23e2-52a6-26c0-8fb2-a6e29e6c01ed',
     name: 'Leg Press',
+    imageAsset: '/exercises/leg-press.webp',
     defaultSets: 3,
     defaultMinRep: 8,
     defaultMaxRep: 12,
@@ -338,6 +360,7 @@ export const SEED_EXERCISES: Exercise[] = [
   make({
     id: 'b54d7630-eae6-e665-c4c4-60a8d86cbc29',
     name: 'Hack Squat',
+    imageAsset: '/exercises/hack-squat.webp',
     defaultSets: 3,
     defaultMinRep: 8,
     defaultMaxRep: 12,
@@ -352,6 +375,7 @@ export const SEED_EXERCISES: Exercise[] = [
   make({
     id: '4fb32341-5e76-6fad-9399-fc38f0a3775f',
     name: 'Goblet Squat',
+    imageAsset: '/exercises/goblet-squat.webp',
     defaultSets: 3,
     defaultMinRep: 10,
     defaultMaxRep: 15,
@@ -366,6 +390,7 @@ export const SEED_EXERCISES: Exercise[] = [
   make({
     id: 'df396a63-a303-de15-3624-f4ab971075ed',
     name: 'Front Squat',
+    imageAsset: '/exercises/front-squat.webp',
     defaultSets: 3,
     defaultMinRep: 6,
     defaultMaxRep: 10,
@@ -380,6 +405,7 @@ export const SEED_EXERCISES: Exercise[] = [
   make({
     id: 'decd54e4-7129-e82e-dcee-08fe1ec2da70',
     name: 'Bulgarian Split Squat',
+    imageAsset: '/exercises/bulgarian-split-squat.webp',
     defaultSets: 3,
     defaultMinRep: 8,
     defaultMaxRep: 12,
@@ -402,3 +428,15 @@ export const TEST_PLAN_ORDER = [
   'Lat Pulldown',
   'Squat',
 ];
+
+const SEED_IMAGE_BY_NAME = new Map(
+  SEED_EXERCISES.map((exercise) => [exercise.name, exercise.imageAsset] as const),
+);
+
+/**
+ * Bundled illustration for a known exercise. Keeps images working while the
+ * Supabase rows are older than the current seed (image_asset not filled yet).
+ */
+export function bundledImageFor(name: string): string | null {
+  return SEED_IMAGE_BY_NAME.get(name) ?? null;
+}

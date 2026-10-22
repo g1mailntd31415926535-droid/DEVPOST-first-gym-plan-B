@@ -1,5 +1,7 @@
 import type { Exercise } from '../types';
 import { Chip } from '../components/Chip';
+import { ExerciseImage } from '../components/ExerciseImage';
+import { MuscleFigure } from '../components/MuscleFigure';
 
 export function TrainingScreen({
   exercise,
@@ -34,6 +36,13 @@ export function TrainingScreen({
           </p>
         )}
       </header>
+
+      <div className="mt-4 flex items-stretch gap-3">
+        <ExerciseImage exercise={exercise} className="h-32 w-32 rounded-card" />
+        <div className="flex flex-1 items-center justify-center rounded-card bg-[#F7F8FA] px-2 py-3 ring-1 ring-ink/5">
+          <MuscleFigure exercise={exercise} size={88} showNote />
+        </div>
+      </div>
 
       <div className="mt-4 flex flex-wrap gap-2">
         <Chip active>99 kg</Chip>

@@ -10,6 +10,7 @@ import {
 } from './lib/session';
 import { HomeScreen } from './screens/HomeScreen';
 import { LoadingScreen } from './screens/LoadingScreen';
+import { CreditsScreen } from './screens/CreditsScreen';
 import { CheckScreen } from './screens/CheckScreen';
 import { BusyChoiceScreen } from './screens/BusyChoiceScreen';
 import { PickExerciseScreen } from './screens/PickExerciseScreen';
@@ -21,6 +22,7 @@ import { FinishedScreen } from './screens/FinishedScreen';
 export default function App() {
   const [catalog, setCatalog] = useState<Catalog | null>(null);
   const [state, dispatch] = useReducer(sessionReducer, initialSessionState);
+  const [showCredits, setShowCredits] = useState(false);
 
   useEffect(() => {
     let active = true;
@@ -52,12 +54,17 @@ export default function App() {
     return <LoadingScreen />;
   }
 
+  if (showCredits) {
+    return <CreditsScreen onBack={() => setShowCredits(false)} />;
+  }
+
   if (state.phase === 'home') {
     return (
       <HomeScreen
         dataSource={catalog.source}
         dataNote={catalog.note}
         onStart={() => dispatch({ type: 'START', plan: testPlan })}
+        onCredits={() => setShowCredits(true)}
       />
     );
   }

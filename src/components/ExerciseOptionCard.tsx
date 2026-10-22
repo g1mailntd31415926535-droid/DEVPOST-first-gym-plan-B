@@ -1,5 +1,6 @@
 import type { Exercise, RankedExercise } from '../types';
-import { DumbbellIcon } from '../components/icons';
+import { ExerciseImage } from '../components/ExerciseImage';
+import { MuscleFigure } from '../components/MuscleFigure';
 import { differencesFor, reasonFor } from '../lib/explain';
 
 export function ExerciseOptionCard({
@@ -24,9 +25,7 @@ export function ExerciseOptionCard({
       ].join(' ')}
     >
       <div className="flex gap-3">
-        <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-brand-soft text-brand">
-          <DumbbellIcon className="h-7 w-7" />
-        </div>
+        <ExerciseImage exercise={exercise} className="h-16 w-16" />
         <div className="min-w-0 flex-1">
           <div className="flex flex-wrap items-center gap-1.5">
             {recommended && (
@@ -50,6 +49,7 @@ export function ExerciseOptionCard({
             {exercise.equipment ?? 'Unknown equipment'} · {exercise.exerciseType}
           </p>
         </div>
+        <MuscleFigure exercise={exercise} size={44} />
       </div>
 
       <p className="mt-2 text-[11px] leading-relaxed text-muted">{reasonFor(base, exercise)}</p>

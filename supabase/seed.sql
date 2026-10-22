@@ -3,6 +3,7 @@
 -- IDs are the original Gym Tracker UUIDs. Names are the approved English labels
 -- (Vietnamese translations stripped); sets/reps/rest/equipment are copied as-is.
 -- Anything uncertain is left as needs-review and never appears in swap results.
+-- image_asset points at the bundled RepDB illustration in public/exercises/.
 
 insert into public.exercises (
   id, name, default_sets, default_min_rep, default_max_rep, default_rest_seconds,
@@ -11,67 +12,67 @@ insert into public.exercises (
 ) values
   -- Test Set originals
   ('7a6d5f7b-68f7-a9c3-0976-47c8ea85343c', 'Incline Barbell Press', 3, 6, 10, 180,
-   'Barbell', 'Chest', 'Upper', 'Press', 'Incline Press', 'compound', 'classified', null),
+   'Barbell', 'Chest', 'Upper', 'Press', 'Incline Press', 'compound', 'classified', '/exercises/incline-barbell-press.webp'),
   ('1f9b0699-9811-a441-8a01-0fc93c810e5e', 'Flat Bench Press', 3, 6, 10, 180,
-   'Barbell', 'Chest', 'Middle', 'Press', 'Horizontal Press', 'compound', 'classified', null),
+   'Barbell', 'Chest', 'Middle', 'Press', 'Horizontal Press', 'compound', 'classified', '/exercises/flat-bench-press.webp'),
   ('8c58c437-f8ad-797c-3af1-abaa5188835d', 'Lateral Raise', 3, 10, 15, 120,
-   'Dumbbell', 'Shoulders', 'Side', 'Raise', 'Lateral Raise', 'isolation', 'classified', null),
+   'Dumbbell', 'Shoulders', 'Side', 'Raise', 'Lateral Raise', 'isolation', 'classified', '/exercises/lateral-raise.webp'),
   ('d1be49f9-9bd6-6b7e-93b0-fc4f72bd5a5d', 'Lat Pulldown', 3, 8, 12, 180,
-   'Cable', 'Back', 'Lats', 'Pull', 'Vertical Pull', 'compound', 'classified', null),
+   'Cable', 'Back', 'Lats', 'Pull', 'Vertical Pull', 'compound', 'classified', '/exercises/lat-pulldown.webp'),
   ('1382982e-3cb2-597e-1076-9027e45ee507', 'Squat', 3, 6, 10, 180,
-   'Barbell', 'Legs', 'Quads', 'Squat', 'Squat Pattern', 'compound', 'classified', null),
+   'Barbell', 'Legs', 'Quads', 'Squat', 'Squat Pattern', 'compound', 'classified', '/exercises/squat.webp'),
 
   -- Chest / Upper candidates
   ('95480247-9686-a23a-30c1-0c7ccfb2b324', 'Incline Dumbbell Press', 3, 8, 12, 180,
-   'Dumbbell', 'Chest', 'Upper', 'Press', 'Incline Press', 'compound', 'classified', null),
+   'Dumbbell', 'Chest', 'Upper', 'Press', 'Incline Press', 'compound', 'classified', '/exercises/incline-dumbbell-press.webp'),
   ('bb29f49e-3ec2-da74-92a8-44232068acab', 'Smith Machine Incline Press', 3, 8, 12, 180,
-   'Smith machine', 'Chest', 'Upper', 'Press', 'Incline Press', 'compound', 'classified', null),
+   'Smith machine', 'Chest', 'Upper', 'Press', 'Incline Press', 'compound', 'classified', '/exercises/smith-machine-incline-press.webp'),
   ('a9de94cb-46f3-217e-9d32-9b31fb81d410', 'Low-to-High Cable Fly', 3, 10, 15, 120,
-   'Cable', 'Chest', 'Upper', 'Raise', 'Chest Fly', 'isolation', 'classified', null),
+   'Cable', 'Chest', 'Upper', 'Raise', 'Chest Fly', 'isolation', 'classified', '/exercises/low-to-high-cable-fly.webp'),
 
   -- Chest / Middle candidates
   ('e31cb09b-779d-956d-2d2f-ba314c291194', 'Dumbbell Bench Press', 3, 8, 12, 180,
-   'Dumbbell', 'Chest', 'Middle', 'Press', 'Horizontal Press', 'compound', 'classified', null),
+   'Dumbbell', 'Chest', 'Middle', 'Press', 'Horizontal Press', 'compound', 'classified', '/exercises/dumbbell-bench-press.webp'),
   ('6bcde17a-7ae5-9fe3-409a-349982b98392', 'Machine Chest Press', 3, 8, 12, 180,
-   'Machine', 'Chest', 'Middle', 'Press', 'Horizontal Press', 'compound', 'classified', null),
+   'Machine', 'Chest', 'Middle', 'Press', 'Horizontal Press', 'compound', 'classified', '/exercises/machine-chest-press.webp'),
   ('5cea0c17-9c72-4030-3ea8-e5be61463786', 'Cable Fly', 3, 10, 15, 120,
-   'Cable', 'Chest', 'Middle', 'Raise', 'Chest Fly', 'isolation', 'needs-review', null),
+   'Cable', 'Chest', 'Middle', 'Raise', 'Chest Fly', 'isolation', 'needs-review', '/exercises/cable-fly.webp'),
   ('60ee059c-93c2-b86e-be4c-1acd52e7a0c4', 'Push-Up', 3, 10, 15, 120,
-   'Body weight', 'Chest', 'Middle', 'Press', 'Horizontal Press', 'compound', 'classified', null),
+   'Body weight', 'Chest', 'Middle', 'Press', 'Horizontal Press', 'compound', 'classified', '/exercises/push-up.webp'),
   ('b8587746-6555-4c70-cf25-ec784b2fbba3', 'Smith Machine Bench Press', 3, 8, 12, 180,
-   'Smith machine', 'Chest', 'Middle', 'Press', 'Horizontal Press', 'compound', 'classified', null),
+   'Smith machine', 'Chest', 'Middle', 'Press', 'Horizontal Press', 'compound', 'classified', '/exercises/smith-machine-bench-press.webp'),
   ('6b85f086-7210-e0dc-cb46-fd4875da86bb', 'Pec Deck Fly', 3, 10, 15, 120,
-   'Machine', 'Chest', 'Middle', 'Raise', 'Chest Fly', 'isolation', 'classified', null),
+   'Machine', 'Chest', 'Middle', 'Raise', 'Chest Fly', 'isolation', 'classified', '/exercises/pec-deck-fly.webp'),
 
   -- Shoulders / Side candidates
   ('2f14b062-c517-3f70-1e61-5e34733f2fae', 'Cable Lateral Raise', 3, 10, 15, 120,
-   'Cable', 'Shoulders', 'Side', 'Raise', 'Lateral Raise', 'isolation', 'classified', null),
+   'Cable', 'Shoulders', 'Side', 'Raise', 'Lateral Raise', 'isolation', 'classified', '/exercises/cable-lateral-raise.webp'),
   ('30a1355e-ad45-3265-c99b-b16549a60c60', 'Machine Lateral Raise', 3, 10, 15, 120,
-   'Machine', 'Shoulders', 'Side', 'Raise', 'Lateral Raise', 'isolation', 'classified', null),
+   'Machine', 'Shoulders', 'Side', 'Raise', 'Lateral Raise', 'isolation', 'classified', '/exercises/machine-lateral-raise.webp'),
 
   -- Back / Lats candidates
   ('80e38928-4bb0-5232-9cc1-21a3fae085f0', 'Pull-Up', 3, 6, 10, 180,
-   'Body weight', 'Back', 'Lats', 'Pull', 'Vertical Pull', 'compound', 'classified', null),
+   'Body weight', 'Back', 'Lats', 'Pull', 'Vertical Pull', 'compound', 'classified', '/exercises/pull-up.webp'),
   ('605ea42e-de97-cb9f-1c31-0729c45ed23f', 'Seated Cable Row', 3, 8, 12, 120,
-   'Cable', 'Back', 'Lats', 'Pull', 'Horizontal Pull', 'compound', 'classified', null),
+   'Cable', 'Back', 'Lats', 'Pull', 'Horizontal Pull', 'compound', 'classified', '/exercises/seated-cable-row.webp'),
   ('62fa6b05-1bb8-f7b6-c587-6c3df03aff79', 'One-Arm Dumbbell Row', 3, 8, 12, 180,
-   'Dumbbell', 'Back', 'Lats', 'Pull', 'Horizontal Pull', 'compound', 'classified', null),
+   'Dumbbell', 'Back', 'Lats', 'Pull', 'Horizontal Pull', 'compound', 'classified', '/exercises/one-arm-dumbbell-row.webp'),
   ('420c8581-366f-313c-e451-c7ab91d9936b', 'Chin-Up', 3, 6, 10, 180,
-   'Body weight', 'Back', 'Lats', 'Pull', 'Vertical Pull', 'compound', 'classified', null),
+   'Body weight', 'Back', 'Lats', 'Pull', 'Vertical Pull', 'compound', 'classified', '/exercises/chin-up.webp'),
   ('599ddcab-cd1c-314f-3d0f-0efee2dc48ae', 'Straight-Arm Pulldown', 3, 10, 15, 120,
-   'Cable', 'Back', 'Lats', 'Pull', 'Straight-Arm Pull', 'isolation', 'needs-review', null),
+   'Cable', 'Back', 'Lats', 'Pull', 'Straight-Arm Pull', 'isolation', 'needs-review', '/exercises/straight-arm-pulldown.webp'),
 
   -- Legs / Quads candidates
   ('9bdd23e2-52a6-26c0-8fb2-a6e29e6c01ed', 'Leg Press', 3, 8, 12, 180,
-   'Machine', 'Legs', 'Quads', 'Squat', 'Squat Pattern', 'compound', 'classified', null),
+   'Machine', 'Legs', 'Quads', 'Squat', 'Squat Pattern', 'compound', 'classified', '/exercises/leg-press.webp'),
   ('b54d7630-eae6-e665-c4c4-60a8d86cbc29', 'Hack Squat', 3, 8, 12, 180,
-   'Machine', 'Legs', 'Quads', 'Squat', 'Squat Pattern', 'compound', 'classified', null),
+   'Machine', 'Legs', 'Quads', 'Squat', 'Squat Pattern', 'compound', 'classified', '/exercises/hack-squat.webp'),
   ('4fb32341-5e76-6fad-9399-fc38f0a3775f', 'Goblet Squat', 3, 10, 15, 150,
-   'Dumbbell', 'Legs', 'Quads', 'Squat', 'Squat Pattern', 'compound', 'classified', null),
+   'Dumbbell', 'Legs', 'Quads', 'Squat', 'Squat Pattern', 'compound', 'classified', '/exercises/goblet-squat.webp'),
   ('df396a63-a303-de15-3624-f4ab971075ed', 'Front Squat', 3, 6, 10, 180,
-   'Barbell', 'Legs', 'Quads', 'Squat', 'Squat Pattern', 'compound', 'classified', null),
+   'Barbell', 'Legs', 'Quads', 'Squat', 'Squat Pattern', 'compound', 'classified', '/exercises/front-squat.webp'),
   ('decd54e4-7129-e82e-dcee-08fe1ec2da70', 'Bulgarian Split Squat', 3, 8, 12, 180,
-   'Dumbbell', 'Legs', 'Quads', 'Squat', 'Split Squat', 'compound', 'needs-review', null)
+   'Dumbbell', 'Legs', 'Quads', 'Squat', 'Split Squat', 'compound', 'needs-review', '/exercises/bulgarian-split-squat.webp')
 on conflict (id) do update set
   name = excluded.name,
   default_sets = excluded.default_sets,

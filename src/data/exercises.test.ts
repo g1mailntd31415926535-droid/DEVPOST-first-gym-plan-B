@@ -40,8 +40,15 @@ describe('mapExerciseRow', () => {
       movementPattern: 'Incline Press',
       exerciseType: 'compound',
       classifyStatus: 'classified',
-      imageAsset: null,
+      imageAsset: '/exercises/incline-barbell-press.webp',
     });
+  });
+
+  it('keeps a DB-provided image and falls back to the bundled one by name', () => {
+    expect(mapExerciseRow({ ...row, image_asset: '/exercises/from-db.webp' }).imageAsset).toBe(
+      '/exercises/from-db.webp',
+    );
+    expect(mapExerciseRow({ ...row, name: 'Unknown Exercise' }).imageAsset).toBeNull();
   });
 });
 

@@ -29,7 +29,7 @@ Build mode: learn
   Learner check: Chạy trọn một buổi tập trong app — thay một bài, hoàn thành 2 set, dùng "Bỏ qua – tập tiếp", thử nút "Bài khác trong giáo án" — và báo chỗ nào chậm/khó hiểu so với cách bạn tập thật.
   Commit: `feat: full training session with rest timer and deferred exercises`
 
-- [ ] **3. Dữ liệu thật: Supabase project mới, giữ nguyên Exercise ID, có fallback offline**
+- [x] **3. Dữ liệu thật: Supabase project mới, giữ nguyên Exercise ID, có fallback offline**
   Becomes usable: App đọc bảng `exercises` từ Supabase mới (chỉ đọc, RLS select-only), hiển thị đúng 5 bài Test Set + ứng viên từ dữ liệu thật; nếu thiếu `.env.local` hoặc mất mạng → tự chạy seed + banner "đang dùng dữ liệu mẫu", demo không chết.
   Why now: Sau khi hành vi đã đúng, thay nguồn dữ liệu là thay đúng một lớp; làm sớm hơn sẽ trộn lỗi dữ liệu với lỗi UI. Đây cũng là chỗ kiểm chứng yêu cầu "không đụng Supabase cũ, giữ UUID".
   PRD ref: `prd.md > Dữ liệu`, `prd.md > States and Boundaries`
@@ -92,4 +92,7 @@ Activity mode: [live app and editor, explicit static fallback, focused alternati
 - Slice 3 (code path): `loadExercises()` async + loading gate; Supabase lỗi/thiếu config/thiếu bài Test Set → seed + banner "Sample data". `lib/supabase.ts` chỉ dùng anon key; `supabase/schema.sql` bật RLS select-only, không có policy ghi; `supabase/IMPORT.md` hướng dẫn export read-only + insert giữ UUID. **Chưa import dữ liệu thật** — chờ learner export và duyệt metadata.
 - Slice 3 (dữ liệu): export full 100 bài từ project cũ; import **26 dòng** (5 Test Set + ứng viên đã phân loại mỗi vùng + 3 `needs-review`). Giữ UUID gốc, tên rút về nhãn tiếng Anh đã duyệt, sets/reps/rest/equipment copy nguyên. Seed offline viết lại y hệt DB.
 - Slice 3 (mở rộng theo yêu cầu learner): thêm Smith Machine Bench Press, Pec Deck Fly, One-Arm Dumbbell Row, Goblet Squat; nâng Low-to-High Cable Fly, Push-Up, Chin-Up, Front Squat lên `classified`. Kết quả: Flat Bench có 5 ứng viên (top 3 + xem thêm), Squat/Lat Pulldown có 4; Shoulders/Side vẫn 2 vì dữ liệu thật không có bài khác — không bịa.
+- Slice 3 verified: REST trả **26 dòng / 23 classified / 3 needs-review**, đủ 4 bài mới, UUID khớp export; app chạy dữ liệu thật, không còn banner mẫu. Slice 3 tick.
+- Slice 4 (built): tải **26 ảnh RepDB flat 512px WebP** vào `public/exercises/` (chỉ ảnh cần dùng, không đóng gói dataset/premium-samples); gắn `image_asset` trong seed + SQL (idempotent, cần chạy lại `seed.sql` để DB có path — app vẫn có fallback theo tên). `MuscleFigure` dùng MuscleMap 1.1: `SHOULDERS_SIDE`, `LATS`, `QUADS` chính xác; chest không có path trên/giữa nên tô cả nhóm + nhãn chữ + ghi rõ trong UI/Credits. Ảnh + hình cơ có trong card thay thế và màn tập; thêm CreditsScreen + link RepDB ở Home.
+- Slice 4 verified (mechanical): headless Chrome 390×844 — ảnh load 200 ở cả 5 vùng, không lỗi console/404; Lat Pulldown hiện đúng mặt sau, Side delts đúng vai ngang, chest hiện đủ ngực kèm nhãn; Flat Bench có 5 ứng viên + "Show 2 more"; Credits mở được. **Chờ learner xem style/độ đúng vùng cơ rồi mới tick.**
 

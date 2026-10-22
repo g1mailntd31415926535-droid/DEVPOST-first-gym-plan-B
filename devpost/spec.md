@@ -244,6 +244,6 @@ gym-plan-b/
 
 **Learner quyết:** React + Vite + TS mobile-first (web trước, WebView/Expo sau); chạy local, **không deploy**; Supabase project mới, giữ UUID gốc, không copy user data/credentials; không khai báo/lọc theo thiết bị; **tên bài tiếng Anh, toàn bộ UI tiếng Anh** (đổi tại build để nộp Devpost); kg = 99 placeholder; ảnh không dùng Lyfta; **hướng hình ảnh C - RepDB Free cho MVP, nâng style minh họa riêng của Gym Plan B sau cuộc thi** (learner xác nhận tại review spec).
 
-**Một điều chưa chắc (đã thống nhất cách kiểm):** MuscleMap có tách được region chi tiết (ngực trên/giữa/dưới, vai trước/giữa/sau) hay không. Cách kiểm: đọc `MUSCLE_GROUP_PARTS` trong `@musclemap/assets` ngay đầu build; bằng chứng = bảng map `lib/muscleMapMapping.ts` được điền hết hoặc ghi rõ phần fallback.
+**Đã kiểm MuscleMap (slice 4):** `@musclemap/react` 1.1.0 chấp nhận React 18 (`peerDependencies: ^18 || ^19`). `MUSCLE_GROUP_PARTS` có `SHOULDERS_FRONT/SIDE/REAR`, `LATS`, `QUADS` nhưng **không có** upper/middle/lower chest. `lib/muscleMapMapping.ts` map chính xác cho vai-ngang / lưng-xô / đùi-trước; chest tô cả nhóm + nhãn chữ "Upper chest"/"Middle chest", UI và Credits ghi rõ giới hạn này.
 
-**Open issues:** (1) peer-dependency React 18.3 vs MuscleMap 1.x — kiểm tra lúc `npm install`; (2) tên file ảnh RepDB khớp `id` nào — chốt khi tải ảnh; (3) learner cung cấp URL + anon key qua `.env.local` (không qua chat).
+**Open issues:** không còn issue chặn build. `.env.local` đã cấu hình local và nằm trong gitignore; ảnh RepDB đóng gói theo slug trong `public/exercises/` và `image_asset` trỏ tới các file đó.
