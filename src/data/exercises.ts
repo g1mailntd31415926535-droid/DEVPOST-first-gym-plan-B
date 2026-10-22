@@ -1,3 +1,4 @@
+import type { SupabaseClient } from '@supabase/supabase-js';
 import type { ClassifyStatus, Exercise, ExerciseType, MovementFamily, MuscleGroup } from '../types';
 import { SEED_EXERCISES, TEST_PLAN_ORDER } from './seed';
 import { supabase } from '../lib/supabase';
@@ -67,10 +68,12 @@ export function mapExerciseRow(row: ExerciseRow): Exercise {
   };
 }
 
-export async function fetchExercisesFromSupabase(): Promise<Exercise[]> {
-  if (!supabase) throw new Error('Supabase is not configured');
+export async function fetchExercisesFromSupabase(
+  client: SupabaseClient | null = supabase,
+): Promise<Exercise[]> {
+  if (!client) throw new Error('Supabase is not configured');
 
-  const query = supabase
+  const query = client
     .from('exercises')
     .select(EXERCISE_COLUMNS)
     .order('name', { ascending: true });

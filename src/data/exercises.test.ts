@@ -53,11 +53,13 @@ describe('loadExercises', () => {
     expect(catalog.note).toBeUndefined();
   });
 
-  it('falls back to the seed with a note when Supabase is not configured', async () => {
-    const catalog = await loadExercises();
+  it('falls back to the seed when Supabase is not configured', async () => {
+    const catalog = await loadExercises(async () => {
+      throw new Error('Supabase is not configured');
+    });
     expect(catalog.source).toBe('seed');
     expect(catalog.exercises).toBe(SEED_EXERCISES);
-    expect(catalog.note).toContain('not configured');
+    expect(catalog.note).toBe('Supabase is not configured');
   });
 
   it('falls back to the seed when the request fails', async () => {
@@ -74,7 +76,7 @@ describe('loadExercises', () => {
     expect(catalog.note).toContain('Test Set exercises missing from Supabase');
   });
 
-  it('throws from the raw fetcher when there is no configured client', async () => {
-    await expect(fetchExercisesFromSupabase()).rejects.toThrow('Supabase is not configured');
+  it('throws from the raw fetcher when there is no client', async () => {
+    await expect(fetchExercisesFromSupabase(null)).rejects.toThrow('Supabase is not configured');
   });
 });

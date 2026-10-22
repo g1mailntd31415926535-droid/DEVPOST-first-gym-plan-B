@@ -51,15 +51,12 @@ describe('session — set and rest flow', () => {
   });
 
   it('moves to the next exercise after the last set + rest, resetting the set counter', () => {
-    const state = reduce(
-      { type: 'SET_DONE', now: NOW },
-      { type: 'REST_DONE' },
-      { type: 'SET_DONE', now: NOW },
-      { type: 'REST_DONE' },
-      { type: 'SET_DONE', now: NOW },
-      { type: 'REST_DONE' },
-      { type: 'SET_DONE', now: NOW },
-    );
+    let state = reduce({ type: 'START_EXERCISE' });
+    for (let set = 1; set < TEST_PLAN[0].defaultSets; set += 1) {
+      state = sessionReducer(state, { type: 'SET_DONE', now: NOW });
+      state = sessionReducer(state, { type: 'REST_DONE' });
+    }
+    state = sessionReducer(state, { type: 'SET_DONE', now: NOW });
     expect(state.restTarget).toBe('next-exercise');
 
     const afterRest = sessionReducer(state, { type: 'REST_DONE' });
@@ -67,7 +64,7 @@ describe('session — set and rest flow', () => {
     expect(afterRest.queue).toEqual([1, 2, 3, 4]);
     expect(afterRest.currentSet).toBe(1);
     expect(currentExercise(afterRest)?.name).toBe('Flat Bench Press');
-    expect(afterRest.finishedSets).toBe(4);
+    expect(afterRest.finishedSets).toBe(TEST_PLAN[0].defaultSets);
   });
 
   it('ignores REST_DONE when no rest is running', () => {

@@ -38,9 +38,11 @@ describe('rankAlternatives — stage 1 filter', () => {
   });
 
   it('excludes needs-review entries from the list', () => {
-    const base = byName('Lateral Raise');
+    const base = byName('Lat Pulldown');
     const names = rankAlternatives(base, SEED_EXERCISES).map((r) => r.exercise.name);
-    expect(names).not.toContain('Upright Row');
+    expect(names).not.toContain('Chin-Up');
+    expect(names).not.toContain('Straight-Arm Pulldown');
+    expect(names).toEqual(['Pull-Up', 'Seated Cable Row']);
   });
 
   it('returns an empty list when the region has no candidates', () => {

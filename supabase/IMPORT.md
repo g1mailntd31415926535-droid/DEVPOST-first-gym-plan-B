@@ -30,25 +30,16 @@ Needed columns are exactly the seven above. Do **not** include `image_url`, `exe
 3. Copy **Project URL** and the **anon public** key into `.env.local` (see `.env.example`).
    Never put `service_role` or the database password in the frontend or the repo.
 
-## 3. Insert rows with explicit IDs
+## 3. Insert the curated rows
 
-Keep every UUID from the export. Fill the classification columns from
-`devpost/prd.md > Phân loại dữ liệu bài tập`; anything uncertain stays `needs-review` (it will not
-appear in swap suggestions).
+Run [`seed.sql`](./seed.sql) in the new project's SQL editor. It imports **22 rows** with explicit
+Gym Tracker UUIDs: the 5 Test Set exercises, 2 verified candidates per target region, and 7
+uncertain candidates kept as `needs-review` (they never appear in swap results).
 
-```sql
-insert into public.exercises (
-  id, name, default_sets, default_min_rep, default_max_rep, default_rest_seconds,
-  equipment, muscle_group, target_region, movement_family, movement_pattern,
-  exercise_type, classify_status, image_asset
-) values
-  ('00000000-0000-0000-0000-000000000000', 'Incline Barbell Press', 4, 8, 12, 180,
-   'Barbell', 'Chest', 'Upper', 'Press', 'Incline Press', 'compound', 'classified', null)
-  -- one row per exercise, comma-separated
-on conflict (id) do nothing;
-```
-
-`image_asset` stays `null` until the RepDB illustrations are added (slice 4).
+- Names use the approved English labels; Vietnamese translations are stripped.
+- `default_sets / min_rep / max_rep / rest / equipment` are copied unchanged from the old rows.
+- `on conflict (id) do update` makes the file safe to re-run after a taxonomy fix.
+- `image_asset` stays `null` until the RepDB illustrations are added (slice 4).
 
 ## 4. Verify before wiring the app
 
