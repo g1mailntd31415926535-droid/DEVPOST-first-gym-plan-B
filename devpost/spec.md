@@ -45,6 +45,7 @@ Docs: [Vite](https://vite.dev/guide/) · [React](https://react.dev/reference/rea
 - Run: `npm install` → `npm run dev` → open `http://localhost:5173`.
 - Demo recording: DevTools → portrait device mode (390×844) to match the mockup.
 - Submission: **short demo video + public GitHub repository** (required). **No deployment** (learner decision); deployment does not replace the video/repository.
+- Public repository (verified public): https://github.com/g1mailntd31415926535-droid/DEVPOST-first-gym-plan-B (branch `main`).
 - Without `.env.local`: the app still runs from the offline seed (clear banner), so demo recording is safe.
 
 ## Look and Feel
