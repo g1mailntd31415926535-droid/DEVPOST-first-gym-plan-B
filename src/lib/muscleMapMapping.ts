@@ -14,12 +14,14 @@ export interface RegionHighlight {
   exact: boolean;
   /** Human label shown next to the figure. */
   label: string;
+  /** True when the red area is only an approximate sub-region mask (chest). */
+  approximate: boolean;
 }
 
-const SHOULDER_REGIONS: Record<string, Pick<RegionHighlight, 'group' | 'exact' | 'label'>> = {
-  Front: { group: 'SHOULDERS_FRONT', exact: true, label: 'Front delts' },
-  Side: { group: 'SHOULDERS_SIDE', exact: true, label: 'Side delts' },
-  Rear: { group: 'SHOULDERS_REAR', exact: true, label: 'Rear delts' },
+const SHOULDER_REGIONS: Record<string, Pick<RegionHighlight, 'group' | 'exact' | 'label' | 'approximate'>> = {
+  Front: { group: 'SHOULDERS_FRONT', exact: true, label: 'Front delts', approximate: false },
+  Side: { group: 'SHOULDERS_SIDE', exact: true, label: 'Side delts', approximate: false },
+  Rear: { group: 'SHOULDERS_REAR', exact: true, label: 'Rear delts', approximate: false },
 };
 
 /**
@@ -35,15 +37,17 @@ export function regionHighlight(muscleGroup: MuscleGroup, targetRegion: string):
         group: 'CHEST',
         view: 'FRONT',
         exact: false,
-        label: `${targetRegion} chest`,
+        label: `${targetRegion} chest (approx.)`,
+        approximate: true,
       };
     case 'Shoulders': {
       const shoulder = SHOULDER_REGIONS[targetRegion] ?? {
         group: 'SHOULDERS_SIDE' as const,
         exact: false,
         label: 'Shoulders',
+        approximate: false,
       };
-      return { ...shoulder, view: 'FRONT' };
+      return { ...shoulder, view: 'FRONT', approximate: false };
     }
     case 'Back':
       return {
@@ -51,6 +55,7 @@ export function regionHighlight(muscleGroup: MuscleGroup, targetRegion: string):
         view: 'BACK',
         exact: targetRegion === 'Lats',
         label: targetRegion === 'Lats' ? 'Lats' : `Back · ${targetRegion}`,
+        approximate: false,
       };
     case 'Legs':
       return {
@@ -58,6 +63,7 @@ export function regionHighlight(muscleGroup: MuscleGroup, targetRegion: string):
         view: 'FRONT',
         exact: targetRegion === 'Quads',
         label: targetRegion === 'Quads' ? 'Quads' : `Legs · ${targetRegion}`,
+        approximate: false,
       };
     case 'Arms':
       return {
@@ -65,6 +71,7 @@ export function regionHighlight(muscleGroup: MuscleGroup, targetRegion: string):
         view: 'FRONT',
         exact: false,
         label: `Arms · ${targetRegion}`,
+        approximate: false,
       };
     case 'Core':
       return {
@@ -72,6 +79,7 @@ export function regionHighlight(muscleGroup: MuscleGroup, targetRegion: string):
         view: 'FRONT',
         exact: false,
         label: `Core · ${targetRegion}`,
+        approximate: false,
       };
     default:
       return {
@@ -79,6 +87,7 @@ export function regionHighlight(muscleGroup: MuscleGroup, targetRegion: string):
         view: 'FRONT',
         exact: false,
         label: `${muscleGroup} · ${targetRegion}`,
+        approximate: false,
       };
   }
 }

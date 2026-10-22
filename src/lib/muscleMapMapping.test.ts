@@ -7,7 +7,8 @@ describe('regionHighlight', () => {
       group: 'CHEST',
       view: 'FRONT',
       exact: false,
-      label: 'Upper chest',
+      approximate: true,
+      label: 'Upper chest (approx.)',
     });
     expect(regionHighlight('Chest', 'Middle')).toMatchObject({ group: 'CHEST', exact: false });
     expect(regionHighlight('Shoulders', 'Side')).toMatchObject({
@@ -30,6 +31,7 @@ describe('regionHighlight', () => {
   it('never claims an exact chest sub-region', () => {
     for (const region of ['Upper', 'Middle', 'Lower']) {
       expect(regionHighlight('Chest', region).exact).toBe(false);
+      expect(regionHighlight('Chest', region).approximate).toBe(true);
     }
   });
 

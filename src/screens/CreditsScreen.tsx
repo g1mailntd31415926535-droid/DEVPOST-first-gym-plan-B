@@ -61,8 +61,9 @@ export function CreditsScreen({ onBack }: { onBack: () => void }) {
               MuscleMap
             </a>{' '}
             (MIT). Shoulders, lats and quads use dedicated region paths. MuscleMap 1.1 has no upper or
-            middle chest path, so chest is highlighted as a whole group and the text label names the exact
-            target — the app does not pretend to be more precise than the library.
+            middle chest path, so Gym Plan B layers an <strong>approximate</strong> gradient mask over the
+            whole chest and labels it &ldquo;approx.&rdquo; — visual emphasis, not an anatomical boundary
+            from the library.
           </p>
         </section>
 

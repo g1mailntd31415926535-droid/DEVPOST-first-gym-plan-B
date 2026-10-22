@@ -1,5 +1,6 @@
 import type { UpcomingOption } from '../lib/session';
-import { ArrowLeftIcon, DumbbellIcon } from '../components/icons';
+import { ArrowLeftIcon } from '../components/icons';
+import { ExerciseImage } from '../components/ExerciseImage';
 
 export function PickExerciseScreen({
   currentName,
@@ -63,9 +64,7 @@ export function PickExerciseScreen({
                 onClick={() => onPick(slot)}
                 className="flex w-full items-center gap-3 rounded-card bg-white p-3 text-left ring-1 ring-ink/10 transition active:scale-[0.99]"
               >
-                <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-brand-soft text-brand">
-                  <DumbbellIcon className="h-6 w-6" />
-                </span>
+                <ExerciseImage exercise={exercise} className="h-12 w-12 rounded-2xl" />
                 <span className="min-w-0 flex-1">
                   <span className="block truncate text-[14px] font-extrabold">{exercise.name}</span>
                   <span className="mt-0.5 block text-[11px] font-semibold text-muted">
