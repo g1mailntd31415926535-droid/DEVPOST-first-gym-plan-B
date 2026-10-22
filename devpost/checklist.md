@@ -49,7 +49,7 @@ Build mode: learn
   Learner check: Open a replacement list and inspect the images + body figures — is the highlighted muscle where you expect, and is the image style acceptable for the demo video?
   Commit: `feat: exercise illustrations and red muscle-region highlighting`
 
-- [ ] **5. Demo packaging: mockup polish, empty states, README and attribution**
+- [x] **5. Demo packaging: mockup polish, empty states, README and attribution**
   Becomes usable: The whole journey is smooth and faithful to the mockup (color, rounded corners, typography, spacing); the empty state "No suitable substitute yet (region X)" appears in the right place; the README explains how to run, RepDB attribution, and a resource-transparency section (data reused from Gym Tracker); the app is ready for a 1-minute demo video following the PRD script.
   Why now: Polish last so effort is not wasted on things that will change; README/attribution are submission requirements, not decoration.
   PRD ref: `prd.md > Look and Feel`, `prd.md > Non-Goals`, `prd.md > What We're Building`
@@ -62,7 +62,7 @@ Build mode: learn
 ## Hands-on Checkpoints
 
 - [x] Early usable behavior explored — after slice 1 (ranked replacement list)
-- [ ] Final kick-the-tires exploration and feedback completed
+- [x] Final kick-the-tires exploration and feedback completed
 
 ## Final Review
 
@@ -70,15 +70,15 @@ Build mode: learn
 
 ## Code Tour and App Map
 
-- [ ] Learning activity complete — guided route, focused alternative, prior practice connected, or brief recap
-- [ ] Optional edit and transfer reflection addressed — offered/declined/already covered/not applicable as appropriate
-- [ ] `devpost/app-map.html` generated from finished code, checked, and shown, including a project-grounded practice to reuse
+- [x] Learning activity complete — guided route, focused alternative, prior practice connected, or brief recap
+- [x] Optional edit and transfer reflection addressed — offered/declined/already covered/not applicable as appropriate
+- [x] `devpost/app-map.html` generated from finished code, checked, and shown, including a project-grounded practice to reuse
 
-Activity and evidence: [what actually happened; real document/test/code references; unfinished work if interrupted]
-Route and stops: [actual paths and symbols; guided stops completed, or reference-only route]
-Edit outcome: [tried/kept/reverted/declined/not applicable; verification if changed]
-Reflection: [offered/answered/declined/already covered — personal answer belongs only in the ignored profile]
-Activity mode: [live app and editor, explicit static fallback, focused alternative, prior practice, or recap]
+Activity and evidence: Focused alternative for an experienced plan-first learner — brief evidence-based recap of the MuscleMap chest-granularity decision. Real uncertainty from `spec.md > Decisions and Open Issues`: MuscleMap 1.1 has no upper/middle chest path. Evidence: `src/lib/muscleMapMapping.ts` maps chest to the coarse group, `src/components/MuscleFigure.tsx` layers the approximate chest mask, `src/lib/muscleMapMapping.test.ts` covers the mapping, and the UI/Credits label the result "(approx.)"; visual check at 390×844 confirmed the label. Takeaway: when a dependency cannot support the requested precision, degrade to the supported unit and label the approximation instead of inventing detail. No code edit was needed; the optional reflection question was offered in the hand-off.
+Route and stops: Reference route in `devpost/app-map.html` (not a live guided tour): `src/screens/CheckScreen.tsx` (`onBusy`) → `src/App.tsx` (`OPEN_BUSY`, `ranked` useMemo) + `src/lib/session.ts` (`OPEN_BUSY` / `OPEN_ALTERNATIVES`) → `src/lib/recommendation.ts` (`rankAlternatives`) → `src/screens/ReplacementListScreen.tsx` + `src/components/ExerciseOptionCard.tsx`. Chest-approximation change pointers: `src/lib/muscleMapMapping.ts`, `src/components/MuscleFigure.tsx`.
+Edit outcome: not applicable — no code edit was proposed for the wrap-up; a kept edit would need its own verification and commit.
+Reflection: offered — optional transfer question about what to change next time when starting with an agent; personal answer belongs only in the ignored `learner-profile.md` if given.
+Activity mode: focused alternative — brief evidence-based recap + app map; no live guided tour and no edit.
 
 ## Revisions
 
@@ -99,3 +99,6 @@ Activity mode: [live app and editor, explicit static fallback, focused alternati
 - Slice 5 (polish): aligned the home sample stats with the calendar (3 sessions, 1 routine); corrected the deferred-exercise copy; removed repeated equipment text from card reasons and the generic "Swap" tag; empty state now names the exact `muscle_group · target_region`; offline banner rewritten for a non-technical reader; added `100dvh` sizing and focus-visible styles; removed the unused Vietnamese font subsets; added `README.md` with run steps, verification, RepDB attribution, and the reuse-transparency section; footer attribution now uses the exact required RepDB phrase.
 - Slice 5: the README transparency list records the reuse already documented in `spec.md` and Credits; the exact reuse wording still needs the learner's confirmation at `6-ship`.
 - Slice 5 verified (mechanical): 31/31 tests pass; production build exits 0 (only the known ~675 kB MuscleMap chunk-size warning); headless Chrome at 390×844 completed the full 5-exercise / 15-set flow to "Session complete" with no console or 404 errors; empty replacement state tested by intercepting the Supabase response; offline seed fallback tested by aborting Supabase (only the expected failed network requests in console); picker empty state reached after finishing four exercises; `git ls-files` contains only `.env.example` (no `.env.local` or `learner-profile.md`).
+- Final review (learner): reviewed the slice 5 flow and copy at 390×844 and approved with no requested changes; the explicit "ready to ship" confirmation is still pending, so the Final Review box remains unchecked.
+- Final review (mechanical): re-ran the tests and build, the full 15-set demo path, empty/offline/picker states, and `git diff --check`; no console errors, 404s, secrets, or tracked private files. No code changes were needed.
+- Learning wrap-up: generated `devpost/app-map.html` from commit `452df25`; checked at 1100px and 390px with headless Chrome, including the reference route, change pointers, and the chest-approximation takeaway. No app/runtime changes were made by the map.

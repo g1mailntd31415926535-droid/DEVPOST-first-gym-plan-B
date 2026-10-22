@@ -1,0 +1,472 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Gym Plan B — App Map</title>
+    <style>
+      :root {
+        --ink: #0b0d12;
+        --muted: #5b6474;
+        --brand: #0a66ff;
+        --brand-soft: #e8efff;
+        --line: #dfe5ef;
+        --paper: #ffffff;
+        --wash: #f3f6fb;
+        --amber: #8a5a00;
+        --amber-soft: #fff7e0;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        background: var(--wash);
+        color: var(--ink);
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+        line-height: 1.55;
+      }
+
+      main {
+        max-width: 880px;
+        margin: 0 auto;
+        padding: 40px 20px 64px;
+      }
+
+      header {
+        margin-bottom: 28px;
+      }
+
+      .eyebrow {
+        margin: 0;
+        color: var(--brand);
+        font-size: 12px;
+        font-weight: 800;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+      }
+
+      h1 {
+        margin: 6px 0 8px;
+        font-size: clamp(28px, 5vw, 42px);
+        line-height: 1.1;
+        letter-spacing: -0.03em;
+      }
+
+      .lede {
+        max-width: 720px;
+        margin: 0;
+        color: var(--muted);
+        font-size: 16px;
+      }
+
+      .meta {
+        margin-top: 14px;
+        color: var(--muted);
+        font-size: 12px;
+      }
+
+      section {
+        margin-top: 20px;
+        padding: 22px;
+        background: var(--paper);
+        border: 1px solid var(--line);
+        border-radius: 20px;
+      }
+
+      h2 {
+        margin: 0 0 10px;
+        font-size: 18px;
+        letter-spacing: -0.01em;
+      }
+
+      h3 {
+        margin: 18px 0 6px;
+        font-size: 14px;
+      }
+
+      p {
+        margin: 8px 0;
+      }
+
+      ul,
+      ol {
+        margin: 8px 0;
+        padding-left: 22px;
+      }
+
+      li + li {
+        margin-top: 6px;
+      }
+
+      code {
+        padding: 1px 5px;
+        background: var(--wash);
+        border: 1px solid var(--line);
+        border-radius: 5px;
+        font-family: ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", monospace;
+        font-size: 0.9em;
+      }
+
+      .flow {
+        display: grid;
+        gap: 10px;
+        align-items: stretch;
+        margin-top: 14px;
+      }
+
+      .flow-row {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 4px;
+        align-items: center;
+      }
+
+      .node {
+        min-height: 94px;
+        padding: 12px;
+        background: var(--wash);
+        border: 1px solid var(--line);
+        border-radius: 14px;
+      }
+
+      .node strong {
+        display: block;
+        margin-bottom: 3px;
+        font-size: 13px;
+      }
+
+      .node span {
+        display: block;
+        color: var(--muted);
+        font-size: 12px;
+        overflow-wrap: anywhere;
+      }
+
+      .node.result {
+        background: var(--brand-soft);
+        border-color: #b9d0ff;
+      }
+
+      .arrow {
+        color: var(--brand);
+        font-size: 20px;
+        font-weight: 800;
+        text-align: center;
+        transform: rotate(90deg);
+        line-height: 1;
+      }
+
+      .source {
+        margin-top: 10px;
+        padding: 12px;
+        background: var(--amber-soft);
+        border: 1px solid #f0d58a;
+        border-radius: 14px;
+        color: var(--amber);
+        font-size: 12px;
+      }
+
+      .source strong {
+        color: var(--ink);
+      }
+
+      .route {
+        counter-reset: stop;
+        padding-left: 0;
+        list-style: none;
+      }
+
+      .route li {
+        position: relative;
+        margin: 0;
+        padding: 14px 0 14px 46px;
+        border-top: 1px solid var(--line);
+      }
+
+      .route li:first-child {
+        border-top: 0;
+      }
+
+      .route li::before {
+        counter-increment: stop;
+        content: counter(stop);
+        position: absolute;
+        left: 0;
+        top: 14px;
+        display: grid;
+        place-items: center;
+        width: 28px;
+        height: 28px;
+        background: var(--brand);
+        color: #fff;
+        border-radius: 999px;
+        font-size: 12px;
+        font-weight: 800;
+      }
+
+      .route strong {
+        display: block;
+        margin-bottom: 2px;
+      }
+
+      .callout {
+        border-left: 4px solid var(--brand);
+        padding: 14px 16px;
+        background: var(--brand-soft);
+        border-radius: 0 14px 14px 0;
+      }
+
+      .callout p {
+        margin: 0;
+      }
+
+      .note {
+        color: var(--muted);
+        font-size: 12px;
+      }
+
+      .tag {
+        display: inline-block;
+        padding: 2px 8px;
+        background: var(--brand-soft);
+        border-radius: 999px;
+        color: var(--brand);
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+      }
+
+      details {
+        margin-top: 10px;
+        padding: 12px 14px;
+        background: var(--wash);
+        border: 1px solid var(--line);
+        border-radius: 14px;
+      }
+
+      summary {
+        cursor: pointer;
+        font-size: 13px;
+        font-weight: 800;
+      }
+
+      footer {
+        margin-top: 20px;
+        color: var(--muted);
+        font-size: 12px;
+        text-align: center;
+      }
+
+      a {
+        color: var(--brand);
+      }
+
+      @media (max-width: 640px) {
+        section {
+          padding: 18px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <header>
+        <p class="eyebrow">Gym Plan B · Demo app map</p>
+        <h1>From “machine busy” to a ranked swap</h1>
+        <p class="lede">
+          A compact guide to the app’s core action: how a tap becomes a same-muscle-region
+          recommendation, and where to start when you want to change it.
+        </p>
+        <p class="meta">
+          Snapshot of commit <code>452df25</code> · React + Vite + TypeScript · local demo only ·
+          open this file directly in a browser; it needs no server.
+        </p>
+      </header>
+
+      <section aria-labelledby="overview">
+        <h2 id="overview">What the app does</h2>
+        <p>
+          Gym Plan B is a proof-of-concept for the moment a gym machine is taken. Instead of
+          abandoning the exercise, the user says the machine is busy and gets a ranked list of
+          substitutes that train the <strong>same muscle group and target region</strong>. The user
+          chooses one, and it replaces that slot in the session.
+        </p>
+        <p>
+          The main pieces are the <strong>session state machine</strong> (<code>src/lib/session.ts</code>),
+          the <strong>recommendation engine</strong> (<code>src/lib/recommendation.ts</code>), and the
+          mobile screens in <code>src/screens/</code>. The catalog comes from a read-only Supabase
+          table, with a bundled 26-exercise seed as the offline fallback.
+        </p>
+      </section>
+
+      <section aria-labelledby="action">
+        <h2 id="action">One action, end to end</h2>
+        <p>
+          <span class="tag">Action</span> User taps <strong>“Machine busy — swap exercise”</strong> on
+          the check sheet, then <strong>“See suggested swaps.”</strong>
+        </p>
+
+        <div class="flow" role="img" aria-label="Flow from the check screen through the session state and recommendation engine to a ranked card">
+          <div class="flow-row">
+            <div class="node">
+              <strong>Check screen</strong>
+              <span><code>src/screens/CheckScreen.tsx</code></span>
+              <span><code>onBusy</code> is the entry point.</span>
+            </div>
+            <div class="arrow" aria-hidden="true">→</div>
+            <div class="node">
+              <strong>Session state</strong>
+              <span><code>src/lib/session.ts</code> + <code>src/App.tsx</code></span>
+              <span><code>OPEN_BUSY</code> → <code>OPEN_ALTERNATIVES</code>.</span>
+            </div>
+            <div class="arrow" aria-hidden="true">→</div>
+            <div class="node">
+              <strong>Recommendation engine</strong>
+              <span><code>src/lib/recommendation.ts</code></span>
+              <span><code>rankAlternatives(base, all)</code>: hard filter, then 80/20 score.</span>
+            </div>
+            <div class="arrow" aria-hidden="true">→</div>
+            <div class="node result">
+              <strong>Ranked result + cards</strong>
+              <span><code>ReplacementListScreen.tsx</code></span>
+              <span><code>ExerciseOptionCard.tsx</code>: reason, image, tag.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="source">
+          <strong>Data source:</strong> <code>loadExercises()</code> in
+          <code>src/data/exercises.ts</code> reads the Supabase <code>exercises</code> table or falls
+          back to <code>src/data/seed.ts</code>. Both feed the same engine; no AI model runs at
+          request time.
+        </div>
+      </section>
+
+      <section aria-labelledby="route">
+        <h2 id="route">Reference route</h2>
+        <p class="note">
+          This is a reference route prepared from the finished code, not a claim that a live guided
+          tour was completed. Use it to reopen the thread later.
+        </p>
+        <ol class="route">
+          <li>
+            <strong>Start at the user’s decision.</strong>
+            <p>
+              Open <code>src/screens/CheckScreen.tsx</code> and search for
+              <code>Machine busy</code>. The second button calls <code>onBusy</code>. That prop is
+              wired in <code>src/App.tsx</code> to dispatch <code>OPEN_BUSY</code>.
+            </p>
+          </li>
+          <li>
+            <strong>Follow the state, not just the screen.</strong>
+            <p>
+              In <code>src/lib/session.ts</code>, find <code>OPEN_BUSY</code> and
+              <code>OPEN_ALTERNATIVES</code> in <code>sessionReducer</code>. In
+              <code>src/App.tsx</code>, the <code>alternatives</code> branch calls
+              <code>rankAlternatives(current, exercises)</code> inside a <code>useMemo</code>, then
+              renders <code>ReplacementListScreen</code>.
+            </p>
+          </li>
+          <li>
+            <strong>End at the rule and the visible result.</strong>
+            <p>
+              In <code>src/lib/recommendation.ts</code>, read <code>rankAlternatives</code>: the
+              <code>eligible</code> filter is the hard region constraint; the score is
+              <code>0.8 * movement + 0.2 * type</code>; only the best same-family/same-pattern
+              candidate gets <code>recommended = true</code>. The cards are rendered by
+              <code>ExerciseOptionCard.tsx</code>.
+            </p>
+          </li>
+        </ol>
+      </section>
+
+      <section aria-labelledby="changes">
+        <h2 id="changes">To change this, start here</h2>
+        <ul>
+          <li>
+            <strong>Change the ranking weights:</strong> <code>src/lib/recommendation.ts</code> —
+            search for <code>0.8 * movement</code> and the three movement constants at the top.
+          </li>
+          <li>
+            <strong>Add or tighten the hard filter:</strong> <code>rankAlternatives</code> in
+            <code>src/lib/recommendation.ts</code> — the <code>eligible</code> filter checks
+            <code>muscleGroup</code>, <code>targetRegion</code>, and <code>classified</code>.
+          </li>
+          <li>
+            <strong>Change the list or empty state:</strong> <code>src/screens/ReplacementListScreen.tsx</code>
+            — the <code>ranked.length === 0</code> branch and the “Show more” controls.
+          </li>
+          <li>
+            <strong>Change the card copy:</strong> <code>src/lib/explain.ts</code>
+            (<code>reasonFor</code>, <code>differencesFor</code>) and
+            <code>src/components/ExerciseOptionCard.tsx</code>.
+          </li>
+          <li>
+            <strong>Change the session flow:</strong> <code>src/lib/session.ts</code> — actions and
+            the reducer; <code>src/App.tsx</code> maps phases to screens.
+          </li>
+          <li>
+            <strong>Change the chest approximation:</strong>
+            <code>src/lib/muscleMapMapping.ts</code> and <code>src/components/MuscleFigure.tsx</code>.
+            MuscleMap 1.1 has no upper/middle chest path, so the mask is approximate and labeled
+            “(approx.)”; keep that honesty if you replace it.
+          </li>
+          <li>
+            <strong>Change the catalog:</strong> <code>src/data/seed.ts</code> and
+            <code>supabase/seed.sql</code>; re-run the seed in the new Supabase project.
+          </li>
+        </ul>
+      </section>
+
+      <section aria-labelledby="practice">
+        <h2 id="practice">A practice to reuse</h2>
+        <div class="callout">
+          <p>
+            <strong>Put the hard constraint before the score, and test the rule that is easiest to
+            fake.</strong> In this app, the region filter runs before the 80/20 ranking, and
+            <code>src/lib/recommendation.test.ts</code> checks that only same-region exercises enter,
+            that <code>needs-review</code> rows never appear, and that a different movement style can
+            never be “Recommend.” That kept an AI-drafted classification table from quietly turning
+            into a confident-sounding but wrong answer.
+          </p>
+        </div>
+        <p class="note">
+          The same pattern transfers to other agent-assisted builds: define the observable rule,
+          put it in one pure function, then give the agent a failing case to protect. When a library
+          cannot support the precision you wanted — here, chest sub-regions in MuscleMap — degrade
+          to the supported unit and label the approximation instead of inventing detail.
+        </p>
+      </section>
+
+      <section aria-labelledby="run">
+        <h2 id="run">Run it again</h2>
+        <pre><code>npm install
+npm run dev</code></pre>
+        <p class="note">
+          Open <code>http://localhost:5173</code>, DevTools device toolbar, 390 × 844. Supabase is
+          optional: without <code>.env.local</code> the app uses the bundled seed and shows the
+          offline banner. This map is a snapshot of commit <code>452df25</code>; it can drift after
+          later edits.
+        </p>
+        <details>
+          <summary>Where the docs live</summary>
+          <p>
+            <code>README.md</code> — run, demo path, attribution, reuse transparency.
+            <code>devpost/prd.md</code> — behavior and boundaries.
+            <code>devpost/spec.md</code> — architecture and decisions.
+            <code>devpost/checklist.md</code> — build history and verification.
+          </p>
+        </details>
+      </section>
+
+      <footer>
+        Gym Plan B · Build With AI: Basics · proof of concept · exercise data and illustrations by
+        RepDB (repdb.co) · body figure by MuscleMap (MIT)
+      </footer>
+    </main>
+  </body>
+</html>
