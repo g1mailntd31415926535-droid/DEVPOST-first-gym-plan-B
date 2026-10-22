@@ -66,7 +66,7 @@ Build mode: learn
 
 ## Final Review
 
-- [ ] Final review complete — feedback resolved and learner confirms ready to ship
+- [x] Final review complete — feedback resolved and learner confirms ready to ship
 
 ## Code Tour and App Map
 
@@ -99,6 +99,6 @@ Activity mode: focused alternative — brief evidence-based recap + app map; no 
 - Slice 5 (polish): aligned the home sample stats with the calendar (3 sessions, 1 routine); corrected the deferred-exercise copy; removed repeated equipment text from card reasons and the generic "Swap" tag; empty state now names the exact `muscle_group · target_region`; offline banner rewritten for a non-technical reader; added `100dvh` sizing and focus-visible styles; removed the unused Vietnamese font subsets; added `README.md` with run steps, verification, RepDB attribution, and the reuse-transparency section; footer attribution now uses the exact required RepDB phrase.
 - Slice 5: the README transparency list records the reuse already documented in `spec.md` and Credits; the exact reuse wording still needs the learner's confirmation at `6-ship`.
 - Slice 5 verified (mechanical): 31/31 tests pass; production build exits 0 (only the known ~675 kB MuscleMap chunk-size warning); headless Chrome at 390×844 completed the full 5-exercise / 15-set flow to "Session complete" with no console or 404 errors; empty replacement state tested by intercepting the Supabase response; offline seed fallback tested by aborting Supabase (only the expected failed network requests in console); picker empty state reached after finishing four exercises; `git ls-files` contains only `.env.example` (no `.env.local` or `learner-profile.md`).
-- Final review (learner): reviewed the slice 5 flow and copy at 390×844 and approved with no requested changes; the explicit "ready to ship" confirmation is still pending, so the Final Review box remains unchecked.
+- Final review (learner): reviewed the slice 5 flow and copy at 390×844 and approved with no requested changes; learner explicitly confirmed the PoC is ready to ship, so the Final Review box is checked.
 - Final review (mechanical): re-ran the tests and build, the full 15-set demo path, empty/offline/picker states, and `git diff --check`; no console errors, 404s, secrets, or tracked private files. No code changes were needed.
 - Learning wrap-up: generated `devpost/app-map.html` from commit `452df25`; checked at 1100px and 390px with headless Chrome, including the reference route, change pointers, and the chest-approximation takeaway. No app/runtime changes were made by the map.
