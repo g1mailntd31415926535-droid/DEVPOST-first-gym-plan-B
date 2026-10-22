@@ -101,3 +101,7 @@ Gym Plan B is a new app, but it does **not** claim the exercise database was bui
 ## Disclaimer
 
 Gym Plan B is a proof-of-concept demo, not medical or training advice. Ranking is an internal rule of thumb for movement similarity, not a scientific claim that two exercises produce equivalent results.
+
+## License
+
+[MIT](LICENSE) © 2026 Tung Duong Nguyen.
