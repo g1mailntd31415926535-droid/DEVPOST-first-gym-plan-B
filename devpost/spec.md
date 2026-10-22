@@ -47,6 +47,7 @@ Docs: [Vite](https://vite.dev/guide/) · [React](https://react.dev/reference/rea
 - Submission: **short demo video + public GitHub repository** (required). **No deployment** (learner decision); deployment does not replace the video/repository.
 - Public repository (verified public): https://github.com/g1mailntd31415926535-droid/DEVPOST-first-gym-plan-B (branch `main`).
 - Open-source license URL: https://github.com/g1mailntd31415926535-droid/DEVPOST-first-gym-plan-B/blob/main/LICENSE (MIT; GitHub detects it in the About section).
+- Devpost project (public): https://devpost.com/software/devpost_first_repo
 - Demo video (public YouTube, 1:52): https://youtu.be/ihV1N6tdFTo
 - Without `.env.local`: the app still runs from the offline seed (clear banner), so demo recording is safe.
 
