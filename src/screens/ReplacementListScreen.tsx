@@ -21,7 +21,7 @@ export function ReplacementListScreen({
   const hiddenCount = ranked.length - visible.length;
 
   return (
-    <div className="phone-frame flex min-h-screen flex-col bg-[#E9ECF2]">
+    <div className="phone-frame flex flex-col bg-[#E9ECF2]">
       <header className="sticky top-0 z-10 flex items-center gap-3 bg-[#E9ECF2]/95 px-5 pb-3 pt-6 backdrop-blur">
         <button
           type="button"
@@ -58,11 +58,14 @@ export function ReplacementListScreen({
 
         {ranked.length === 0 ? (
           <div className="mt-3 rounded-card border border-dashed border-ink/20 bg-white/60 p-6 text-center">
-            <p className="text-[14px] font-extrabold">No suitable swap yet</p>
+            <p className="text-[14px] font-extrabold">No suitable substitute yet</p>
             <p className="mt-1 text-[12px] leading-relaxed text-muted">
-              Nothing in this muscle region has been verified yet. The app won&rsquo;t pad the list with
-              exercises outside the target region — pick another exercise from your plan, or wait for the
-              machine.
+              There is no verified candidate for{' '}
+              <strong className="font-bold text-ink">
+                {base.muscleGroup} · {base.targetRegion}
+              </strong>
+              . The app won&rsquo;t pad the list with exercises outside the target region — pick another
+              exercise from your plan, or wait for the machine.
             </p>
           </div>
         ) : (

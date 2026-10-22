@@ -10,11 +10,16 @@
   body {
     @apply bg-[#E9ECF2] font-sans text-ink antialiased;
   }
+
+  button,
+  a {
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2;
+  }
 }
 
 @layer components {
   .phone-frame {
-    @apply mx-auto min-h-screen w-full max-w-[430px] bg-white shadow-[0_0_60px_rgba(11,13,18,0.08)];
+    @apply mx-auto min-h-[100dvh] w-full max-w-[430px] bg-white shadow-[0_0_60px_rgba(11,13,18,0.08)];
   }
 
   .chip {

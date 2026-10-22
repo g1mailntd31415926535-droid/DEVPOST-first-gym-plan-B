@@ -17,7 +17,7 @@ export function RestScreen({
   const remainingMs = useRestTimer(restEndsAt, onDone);
 
   return (
-    <div className="phone-frame flex min-h-screen flex-col items-center px-5 pb-8 pt-10 text-center">
+    <div className="phone-frame flex flex-col items-center px-5 pb-8 pt-10 text-center">
       <p className="text-[11px] font-extrabold uppercase tracking-[0.18em] text-muted">Rest</p>
       <h1 className="mt-1 text-[20px] font-extrabold leading-tight">{exercise.name}</h1>
 

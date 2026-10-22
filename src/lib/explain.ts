@@ -25,7 +25,6 @@ export function reasonFor(base: Exercise, candidate: Exercise): string {
     parts.push(`Same type: ${TYPE_LABEL[candidate.exerciseType]}`);
   }
 
-  parts.push(`Equipment: ${candidate.equipment ?? 'unknown'}`);
   return parts.join(' · ');
 }
 

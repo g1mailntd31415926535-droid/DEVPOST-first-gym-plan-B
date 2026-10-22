@@ -1,6 +1,6 @@
 export function LoadingScreen() {
   return (
-    <div className="phone-frame flex min-h-screen flex-col items-center justify-center px-6 text-center">
+    <div className="phone-frame flex flex-col items-center justify-center px-6 text-center">
       <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-brand text-white">
         <svg viewBox="0 0 24 24" fill="none" className="h-7 w-7" aria-hidden>
           <path

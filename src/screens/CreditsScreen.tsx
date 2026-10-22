@@ -6,7 +6,7 @@ const MUSCLEMAP_URL = 'https://github.com/Jsplice/MuscleMap';
 
 export function CreditsScreen({ onBack }: { onBack: () => void }) {
   return (
-    <div className="phone-frame flex min-h-screen flex-col bg-[#E9ECF2]">
+    <div className="phone-frame flex flex-col bg-[#E9ECF2]">
       <header className="flex items-center gap-3 px-5 pb-3 pt-6">
         <button
           type="button"

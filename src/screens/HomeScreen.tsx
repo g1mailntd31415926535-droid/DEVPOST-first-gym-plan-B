@@ -1,5 +1,5 @@
 const days = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
-const trainedDays = [2, 5, 6, 9, 12, 16, 19, 23];
+const trainedDays = [5, 12, 19];
 
 export function HomeScreen({
   onStart,
@@ -31,7 +31,7 @@ export function HomeScreen({
         >
           <span className="mt-0.5 text-[13px]">●</span>
           <p className="text-[11px] font-semibold leading-relaxed">
-            Sample data — Supabase is not connected. The demo is running on bundled exercises.
+            Live data is unavailable — using the bundled demo catalog. The full flow still works.
           </p>
         </div>
       )}
@@ -46,7 +46,7 @@ export function HomeScreen({
           <p className="mt-1 text-[10px] font-semibold uppercase leading-tight text-muted">Total sessions</p>
         </div>
         <div className="rounded-2xl bg-white p-3 ring-1 ring-ink/5">
-          <p className="text-[26px] font-extrabold leading-none">2</p>
+          <p className="text-[26px] font-extrabold leading-none">1</p>
           <p className="mt-1 text-[10px] font-semibold uppercase leading-tight text-muted">Routines</p>
         </div>
       </section>
@@ -148,7 +148,7 @@ export function HomeScreen({
           Credits &amp; data sources
         </button>
         <p className="mt-2 text-[11px] font-semibold leading-relaxed text-muted">
-          Proof-of-concept demo · Exercise data &amp; illustrations by{' '}
+          Proof-of-concept demo · Exercise data by{' '}
           <a
             href="https://repdb.co/"
             target="_blank"

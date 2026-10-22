@@ -38,11 +38,6 @@ export function ExerciseOptionCard({
                 Different movement style
               </span>
             )}
-            {!recommended && !isDifferentStyle && (
-              <span className="rounded-chip bg-chip px-2 py-0.5 text-[10px] font-extrabold uppercase tracking-wide text-muted">
-                Swap
-              </span>
-            )}
           </div>
           <h3 className="mt-1 text-[15px] font-extrabold leading-tight">{exercise.name}</h3>
           <p className="mt-0.5 text-[11px] font-semibold text-muted">

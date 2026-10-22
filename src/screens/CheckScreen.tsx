@@ -26,7 +26,7 @@ export function CheckScreen({
       </p>
       <h1 className="mt-1 text-[26px] font-extrabold leading-tight">{exercise.name}</h1>
       <p className="mt-1 text-[12px] font-semibold text-muted">
-        {exercise.muscleGroup} · {exercise.targetRegion} · {exercise.equipment}
+        {exercise.muscleGroup} · {exercise.targetRegion} · {exercise.equipment ?? 'Unknown equipment'}
       </p>
 
       <div className="mt-4 flex flex-wrap gap-2">
@@ -40,7 +40,7 @@ export function CheckScreen({
 
       {isDeferred && (
         <p className="mt-3 rounded-2xl bg-brand-soft px-3 py-2 text-[11px] font-semibold leading-relaxed text-brand">
-          You moved this exercise earlier because the machine was busy. Check again before starting.
+          You deferred this exercise because the machine was busy. Check again before starting.
         </p>
       )}
 

@@ -21,14 +21,14 @@ export function TrainingScreen({
   onSetDone: () => void;
 }) {
   return (
-    <div className="phone-frame flex min-h-screen flex-col px-5 pb-8 pt-6">
+    <div className="phone-frame flex flex-col px-5 pb-8 pt-6">
       <header>
         <p className="text-[11px] font-extrabold uppercase tracking-[0.16em] text-muted">
           Exercise {position} of {total}
         </p>
         <h1 className="mt-1 text-[24px] font-extrabold leading-tight">{exercise.name}</h1>
         <p className="mt-1 text-[12px] font-semibold text-muted">
-          {exercise.muscleGroup} · {exercise.targetRegion} · {exercise.equipment}
+          {exercise.muscleGroup} · {exercise.targetRegion} · {exercise.equipment ?? 'Unknown equipment'}
         </p>
         {replacedFrom && (
           <p className="mt-2 inline-flex rounded-chip bg-brand-soft px-2.5 py-1 text-[11px] font-bold text-brand">
