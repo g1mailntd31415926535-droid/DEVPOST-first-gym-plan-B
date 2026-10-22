@@ -40,9 +40,13 @@ describe('rankAlternatives — stage 1 filter', () => {
   it('excludes needs-review entries from the list', () => {
     const base = byName('Lat Pulldown');
     const names = rankAlternatives(base, SEED_EXERCISES).map((r) => r.exercise.name);
-    expect(names).not.toContain('Chin-Up');
     expect(names).not.toContain('Straight-Arm Pulldown');
-    expect(names).toEqual(['Pull-Up', 'Seated Cable Row']);
+    expect(names).toEqual([
+      'Chin-Up',
+      'Pull-Up',
+      'One-Arm Dumbbell Row',
+      'Seated Cable Row',
+    ]);
   });
 
   it('returns an empty list when the region has no candidates', () => {
@@ -67,12 +71,23 @@ describe('rankAlternatives — stage 2 scoring and tags', () => {
   it('scores the same family with a different pattern lower than an exact match', () => {
     const results = rankAlternatives(byName('Lat Pulldown'), SEED_EXERCISES);
     const pullUp = results.find((r) => r.exercise.name === 'Pull-Up');
+    const chinUp = results.find((r) => r.exercise.name === 'Chin-Up');
     const row = results.find((r) => r.exercise.name === 'Seated Cable Row');
     expect(pullUp?.movementScore).toBe(1);
+    expect(chinUp?.movementScore).toBe(1);
     expect(row?.movementScore).toBe(0.6);
     expect(pullUp!.score).toBeGreaterThan(row!.score);
-    expect(pullUp?.recommended).toBe(true);
     expect(row?.recommended).toBe(false);
+    // Only one exact-movement candidate may carry the Recommend tag.
+    const recommended = results.filter((r) => r.recommended);
+    expect(recommended).toHaveLength(1);
+    expect(recommended[0].movementScore).toBe(1);
+  });
+
+  it('has enough classified candidates to show a top 3 plus "Show more" for flat bench', () => {
+    const results = rankAlternatives(byName('Flat Bench Press'), SEED_EXERCISES);
+    expect(results.length).toBeGreaterThan(3);
+    expect(results.filter((r) => r.exercise.movementFamily === 'Raise')).toHaveLength(1);
   });
 
   it('tags different movement families and never lets them be recommended', () => {

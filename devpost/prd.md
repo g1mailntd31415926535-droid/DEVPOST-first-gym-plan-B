@@ -60,11 +60,14 @@ Bảng taxonomy đã được learner duyệt từng ý (family: Press · Pull �
 
 | Bài gốc | Ứng viên cùng family | Ứng viên khác family (tag "kiểu chuyển động khác") |
 |---|---|---|
-| Incline Barbell Press | Incline Dumbbell Press · Smith Machine Incline Press · Incline Machine Press | Low-to-High Cable Fly ⚠ |
-| Flat Bench Press | Dumbbell Bench Press · Machine Chest Press | Cable Fly ⚠ · Push-Up ⚠ |
-| Lateral Raise | Cable Lateral Raise · Machine Lateral Raise · Dumbbell Lateral Raise (nếu tách riêng khỏi bài gốc) | Upright Row ⚠ |
-| Lat Pulldown | Pull-Up · Seated Cable Row (cùng family, pattern khác → điểm thấp hơn) · Chin-Up ⚠ | Straight-Arm Pulldown ⚠ |
-| Squat | Leg Press · Hack Squat · Front Squat ⚠ | Bulgarian Split Squat ⚠ (unilateral, family lunges chưa khai báo) |
+| Incline Barbell Press | Incline Dumbbell Press · Smith Machine Incline Press | Low-to-High Cable Fly |
+| Flat Bench Press | Dumbbell Bench Press · Machine Chest Press · Smith Machine Bench Press · Push-Up | Pec Deck Fly · Cable Fly ⚠ |
+| Lateral Raise | Cable Lateral Raise · Machine Lateral Raise · Dumbbell Lateral Raise (nếu tách riêng khỏi bài gốc) | — (DB thật không có bài side-delt nào khác) |
+| Lat Pulldown | Pull-Up · Chin-Up · Seated Cable Row (cùng family, pattern khác → điểm thấp hơn) · One-Arm Dumbbell Row | Straight-Arm Pulldown ⚠ |
+| Squat | Leg Press · Hack Squat · Front Squat · Goblet Squat | Bulgarian Split Squat ⚠ (unilateral, family lunges chưa khai báo) |
+
+- Learner duyệt mở rộng danh sách tại build (sau khi thấy dữ liệu thật): thêm Smith Machine Bench Press, Pec Deck Fly, One-Arm Dumbbell Row, Goblet Squat; nâng Low-to-High Cable Fly, Push-Up, Chin-Up, Front Squat từ ⚠ lên đã phân loại. Tổng **26 dòng** trong DB mới: **23 đã phân loại + 3 `needs-review`**.
+- Vùng Shoulders/Side chỉ có 2 ứng viên đã phân loại trong dữ liệu thật → chấp nhận ít hơn top 3, không bịa thêm bài.
 
 Ma trận điểm movement (80%): cùng family + cùng pattern = 1.0 → tag Recommend; cùng family + khác pattern = 0.6; khác family = 0.3 + bắt buộc tag "kiểu chuyển động khác", không được dính Recommend. Exercise type (20%): khớp = 1, không = 0.
 

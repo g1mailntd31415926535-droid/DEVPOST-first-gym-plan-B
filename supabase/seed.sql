@@ -1,4 +1,4 @@
--- Gym Plan B — curated exercise rows (22)
+-- Gym Plan B — curated exercise rows (26)
 -- Run AFTER schema.sql in the NEW Supabase project (SQL editor).
 -- IDs are the original Gym Tracker UUIDs. Names are the approved English labels
 -- (Vietnamese translations stripped); sets/reps/rest/equipment are copied as-is.
@@ -27,7 +27,7 @@ insert into public.exercises (
   ('bb29f49e-3ec2-da74-92a8-44232068acab', 'Smith Machine Incline Press', 3, 8, 12, 180,
    'Smith machine', 'Chest', 'Upper', 'Press', 'Incline Press', 'compound', 'classified', null),
   ('a9de94cb-46f3-217e-9d32-9b31fb81d410', 'Low-to-High Cable Fly', 3, 10, 15, 120,
-   'Cable', 'Chest', 'Upper', 'Raise', 'Chest Fly', 'isolation', 'needs-review', null),
+   'Cable', 'Chest', 'Upper', 'Raise', 'Chest Fly', 'isolation', 'classified', null),
 
   -- Chest / Middle candidates
   ('e31cb09b-779d-956d-2d2f-ba314c291194', 'Dumbbell Bench Press', 3, 8, 12, 180,
@@ -37,7 +37,11 @@ insert into public.exercises (
   ('5cea0c17-9c72-4030-3ea8-e5be61463786', 'Cable Fly', 3, 10, 15, 120,
    'Cable', 'Chest', 'Middle', 'Raise', 'Chest Fly', 'isolation', 'needs-review', null),
   ('60ee059c-93c2-b86e-be4c-1acd52e7a0c4', 'Push-Up', 3, 10, 15, 120,
-   'Body weight', 'Chest', 'Middle', 'Press', 'Horizontal Press', 'compound', 'needs-review', null),
+   'Body weight', 'Chest', 'Middle', 'Press', 'Horizontal Press', 'compound', 'classified', null),
+  ('b8587746-6555-4c70-cf25-ec784b2fbba3', 'Smith Machine Bench Press', 3, 8, 12, 180,
+   'Smith machine', 'Chest', 'Middle', 'Press', 'Horizontal Press', 'compound', 'classified', null),
+  ('6b85f086-7210-e0dc-cb46-fd4875da86bb', 'Pec Deck Fly', 3, 10, 15, 120,
+   'Machine', 'Chest', 'Middle', 'Raise', 'Chest Fly', 'isolation', 'classified', null),
 
   -- Shoulders / Side candidates
   ('2f14b062-c517-3f70-1e61-5e34733f2fae', 'Cable Lateral Raise', 3, 10, 15, 120,
@@ -50,8 +54,10 @@ insert into public.exercises (
    'Body weight', 'Back', 'Lats', 'Pull', 'Vertical Pull', 'compound', 'classified', null),
   ('605ea42e-de97-cb9f-1c31-0729c45ed23f', 'Seated Cable Row', 3, 8, 12, 120,
    'Cable', 'Back', 'Lats', 'Pull', 'Horizontal Pull', 'compound', 'classified', null),
+  ('62fa6b05-1bb8-f7b6-c587-6c3df03aff79', 'One-Arm Dumbbell Row', 3, 8, 12, 180,
+   'Dumbbell', 'Back', 'Lats', 'Pull', 'Horizontal Pull', 'compound', 'classified', null),
   ('420c8581-366f-313c-e451-c7ab91d9936b', 'Chin-Up', 3, 6, 10, 180,
-   'Body weight', 'Back', 'Lats', 'Pull', 'Vertical Pull', 'compound', 'needs-review', null),
+   'Body weight', 'Back', 'Lats', 'Pull', 'Vertical Pull', 'compound', 'classified', null),
   ('599ddcab-cd1c-314f-3d0f-0efee2dc48ae', 'Straight-Arm Pulldown', 3, 10, 15, 120,
    'Cable', 'Back', 'Lats', 'Pull', 'Straight-Arm Pull', 'isolation', 'needs-review', null),
 
@@ -60,8 +66,10 @@ insert into public.exercises (
    'Machine', 'Legs', 'Quads', 'Squat', 'Squat Pattern', 'compound', 'classified', null),
   ('b54d7630-eae6-e665-c4c4-60a8d86cbc29', 'Hack Squat', 3, 8, 12, 180,
    'Machine', 'Legs', 'Quads', 'Squat', 'Squat Pattern', 'compound', 'classified', null),
+  ('4fb32341-5e76-6fad-9399-fc38f0a3775f', 'Goblet Squat', 3, 10, 15, 150,
+   'Dumbbell', 'Legs', 'Quads', 'Squat', 'Squat Pattern', 'compound', 'classified', null),
   ('df396a63-a303-de15-3624-f4ab971075ed', 'Front Squat', 3, 6, 10, 180,
-   'Barbell', 'Legs', 'Quads', 'Squat', 'Squat Pattern', 'compound', 'needs-review', null),
+   'Barbell', 'Legs', 'Quads', 'Squat', 'Squat Pattern', 'compound', 'classified', null),
   ('decd54e4-7129-e82e-dcee-08fe1ec2da70', 'Bulgarian Split Squat', 3, 8, 12, 180,
    'Dumbbell', 'Legs', 'Quads', 'Squat', 'Split Squat', 'compound', 'needs-review', null)
 on conflict (id) do update set

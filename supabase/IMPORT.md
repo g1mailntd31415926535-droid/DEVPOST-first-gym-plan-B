@@ -32,8 +32,8 @@ Needed columns are exactly the seven above. Do **not** include `image_url`, `exe
 
 ## 3. Insert the curated rows
 
-Run [`seed.sql`](./seed.sql) in the new project's SQL editor. It imports **22 rows** with explicit
-Gym Tracker UUIDs: the 5 Test Set exercises, 2 verified candidates per target region, and 7
+Run [`seed.sql`](./seed.sql) in the new project's SQL editor. It imports **26 rows** with explicit
+Gym Tracker UUIDs: the 5 Test Set exercises, 3–5 classified candidates per target region, and 3
 uncertain candidates kept as `needs-review` (they never appear in swap results).
 
 - Names use the approved English labels; Vietnamese translations are stripped.
